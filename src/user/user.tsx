@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import "./user.scss";
 
-
-const root = ReactDOM.createRoot(document.getElementById("quizbit_current_user_info") as HTMLElement);
-const attributesData = document.getElementById("quizbit_current_user_info")?.getAttribute("quizbit_current_user_info");
+const id = "quizbit-quiz-card";
+const root = ReactDOM.createRoot(document.getElementById(id) as HTMLElement);
+const attributesData = document.getElementById(id)?.getAttribute(id);
 
 const array = JSON.parse(attributesData || '{}');
 

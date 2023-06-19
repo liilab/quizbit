@@ -20,7 +20,7 @@ class API
     {
         add_action('rest_api_init', [$this, 'register_api']);
 
-        $this->routes = ['UserInfo'];
+        $this->routes = ['Quiz'];
     }
 
     public function register_api()

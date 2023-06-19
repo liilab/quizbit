@@ -3,17 +3,17 @@ import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./admin.scss";
 
-import Dashboard from "./pages/Dashboard";
-import Contact from "./pages/Contact";
+import AllQuizzes from "./pages/AllQuizzes";
+import AddNew from "./pages/AddNew";
 
 const router = createHashRouter([
   {
-    path: "/dashboard",
-    element: <Dashboard />,
+    path: "/all-quizzes",
+    element: <AllQuizzes />,
   },
   {
-    path: "/contact",
-    element: <Contact />,
+    path: "/add-new",
+    element: <AddNew />,
   },
 ]);
 

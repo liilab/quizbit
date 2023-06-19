@@ -79,16 +79,16 @@ class Menu
         add_menu_page(__('Quizbit', 'quizbit'), __('Quizbit', 'quizbit'), $capability, $parent_slug,  [$this, 'quizbit'], 'dashicons-admin-post', '2.1');
         global $submenu;
 
-        $submenu[$parent_slug]['dashboard'] = array(
-            'Dashboard',
+        $submenu[$parent_slug]['all-quizzes'] = array(
+            'All Quizzes',
             'manage_options',
-            'admin.php?page=quizbit#/dashboard',
+            'admin.php?page=quizbit#/all-quizzes',
         );
 
-        $submenu[$parent_slug]['contact'] = array(
-            'Contact',
+        $submenu[$parent_slug]['add-new'] = array(
+            'Add New',
             'manage_options',
-            'admin.php?page=quizbit#/contact',
+            'admin.php?page=quizbit#/add-new',
         );
     }
 

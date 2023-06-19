@@ -19,7 +19,7 @@ class Shortcode
      */
     function __construct()
     {
-        add_shortcode('quizbit_current_user_info', [$this, 'quizbit_current_user_info_callback']);
+        add_shortcode('quizbit', [$this, 'quiz_shortcode']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
         add_filter('script_loader_tag', array($this, 'add_module_to_script'), 10, 3);
     }
@@ -66,20 +66,14 @@ class Shortcode
 
 
     /**
-     * Current user info shortcode callback
+     * Quiz Card shortcode callback
      *
      * @return void
      */
 
 
-    public function quizbit_current_user_info_callback($atts)
+    public function quiz_shortcode($atts)
     {
-        $atts = shortcode_atts(array(
-            'id' => '0',
-        ), $atts, 'quizbit_current_user_info');
-
-        $atts = htmlspecialchars(json_encode($atts));
-
-        return '<div id="quizbit_current_user_info" quizbit_current_user_info="' . $atts . '"></div>';
+        return '<div id="quizbit-quiz-card" data-id="' . $atts['id'] . '"></div>';
     }
 }
