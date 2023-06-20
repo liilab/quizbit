@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
-import QuizTableCell from "./QuizTableCell";
+import QuizTableRow from "./QuizTableRow";
 
 interface Column {
   id: "number" | "title" | "description" | "id" | "short_code";
@@ -22,9 +23,9 @@ const columns: readonly Column[] = [
   {
     id: "number",
     label: "#",
-    minWidth: 170,
+    minWidth: 70,
   },
-  { id: "title", label: "Title", minWidth: 170 },
+  { id: "title", label: "Title", minWidth: 250 },
   { id: "description", label: "Description", minWidth: 370 },
   { id: "short_code", label: "Short Code", minWidth: 170 },
 ];
@@ -48,9 +49,11 @@ function createData(
 }
 
 export default function AllQuizzesFunction() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [refresh, setRefresh] = React.useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [refresh, setRefresh] = useState(false);
+  const [rows, setRows] = useState<Data[]>([]);
+  const home_url = (window as any).userLocalize.home_url;
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -63,49 +66,28 @@ export default function AllQuizzesFunction() {
     setPage(0);
   };
 
-  const [rows, setRows] = React.useState<Data[]>([]);
-
-  const home_url = (window as any).userLocalize.home_url;
-
-  
 
   React.useEffect(() => {
     axios
       .get(home_url + "/wp-json/quizbit/v1/quiz/all-quzzes")
       .then((response) => {
-        const responseData = response.data; // Store the response data
+        const responseData = response.data; 
 
         if (Array.isArray(responseData.data)) {
-          // Check if the data property is an array
           const rows = responseData.data.map((quiz: any, index: number) => {
             const title = quiz.title || "No Title";
             const description = quiz.description || "No Description";
-            return createData(index + 1, quiz.id, title, description); // Add return statement here
+            return createData(index + 1, quiz.id, title, description);
           });
-
           setRows(rows);
         } else {
-          console.error("Invalid data format"); // Handle the case when data is not an array
+          console.error("Invalid data format");
         }
       })
       .catch((error) => {
-        // Handle the error response
-        console.error(error); // You can customize this based on your needs
+        console.error(error);
       });
   }, [refresh]);
-
-  function deleteQuiz(id: string) {
-    axios
-      .delete(home_url + `/wp-json/quizbit/v1/quiz/delete/${id}`)
-      .then((response) => {
-        console.log(response);
-        setRefresh(!refresh);
-      })
-      .catch((error) => {
-        // Handle the error response
-        console.error(error); // You can customize this based on your needs
-      });
-  }
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -129,19 +111,12 @@ export default function AllQuizzesFunction() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <QuizTableCell
-                          column={column}
-                          value={value}
-                          row_id={row.id}
-                          deleteQuiz={deleteQuiz}
-                        />
-                      );
-                    })}
-                  </TableRow>
+                  <QuizTableRow
+                    key={index}
+                    row={row}
+                    index={index}
+                    setRefresh={setRefresh}
+                  />
                 );
               })}
           </TableBody>
