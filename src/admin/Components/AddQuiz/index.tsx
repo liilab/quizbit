@@ -32,14 +32,14 @@ export default function Form() {
     };
 
     const home_url = (window as any).userLocalize.home_url;
+    const site_url = (window as any).userLocalize.site_url;
+
   
     // Make the API request to save the quiz data
     axios
       .post(home_url + "/wp-json/quizbit/v1/quiz", quizData)
       .then((response) => {
-        // Handle the successful response
-        console.log(response.data); // You can customize this based on your needs
-        window.location.href = home_url + '/wp-admin/admin.php?page=quizbit#/all-quizzes';
+        window.location.href = site_url + '/wp-admin/admin.php?page=quizbit#/all-quizzes';
       })
       .catch((error) => {
         // Handle the error response
