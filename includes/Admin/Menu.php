@@ -62,6 +62,7 @@ class Menu
         //Localize the script with new data
         $data = array(
             'home_url' => home_url(),
+            'site_url' => site_url(),
         );
         wp_localize_script('quizbit-admin', 'userLocalize', $data);
     }
