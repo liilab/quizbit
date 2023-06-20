@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Input from "../Shared/Input";
+import Input from "../../../Shared/Input";
 import NewQuiz from "./NewQuiz";
 import axios from "axios";
 
