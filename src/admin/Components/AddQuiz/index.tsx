@@ -19,7 +19,7 @@ export default function Form() {
   const [showDescription, setShowDescription] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [newQuizes, setNewQuizes] = useState<Quiz[]>([
+  const [newQuzzes, setNewQuzzes] = useState<Quiz[]>([
     { title: "", options: [] },
   ]);
 
@@ -28,16 +28,18 @@ export default function Form() {
     const quizData = {
       title: title,
       description: description,
-      quizes: newQuizes,
+      quzzes: newQuzzes,
     };
+
+    const home_url = (window as any).userLocalize.home_url;
   
     // Make the API request to save the quiz data
     axios
-      .post("http://localhost/wordpress/wp-json/quizbit/v1/quiz", quizData)
+      .post(home_url + "/wp-json/quizbit/v1/quiz", quizData)
       .then((response) => {
         // Handle the successful response
         console.log(response.data); // You can customize this based on your needs
-        window.location.href = 'http://localhost/wordpress/wp-admin/admin.php?page=quizbit-all-quizzes';
+        window.location.href = home_url + '/wp-admin/admin.php?page=quizbit#/all-quizzes';
       })
       .catch((error) => {
         // Handle the error response
@@ -49,7 +51,7 @@ export default function Form() {
   const data = {
     title: title,
     description: description,
-    quizes: newQuizes,
+    quzzes: newQuzzes,
   };
 
   const formSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -99,7 +101,7 @@ export default function Form() {
                 </button>
               )}
             </div>
-            <NewQuiz newQuizes={newQuizes} setNewQuizes={setNewQuizes} />
+            <NewQuiz newQuzzes={newQuzzes} setNewQuzzes={setNewQuzzes} />
           </div>
         </div>
       </div>

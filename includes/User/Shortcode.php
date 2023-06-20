@@ -74,6 +74,7 @@ class Shortcode
 
     public function quiz_shortcode($atts)
     {
-        return '<div id="quizbit-quiz-card" data-id="' . $atts['id'] . '"></div>';
+        $atts = htmlspecialchars(json_encode($atts));
+        return '<div id="quizbit-quiz-card" quizbit-quiz-card="' . $atts . '"></div>';
     }
 }

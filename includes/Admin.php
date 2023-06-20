@@ -2,7 +2,7 @@
 
 namespace Quizbit;
 use Quizbit\Traits\Singleton;
-use Quizbit\Admin\Menu, Quizbit\Admin\API;
+use Quizbit\Admin\Menu;
 
 /**
  * The admin class
@@ -16,6 +16,5 @@ class Admin {
      */
     function __construct() {
         new Menu();
-        new API();
     }
 }

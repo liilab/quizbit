@@ -38,14 +38,13 @@ final class Quizbit
     private function __construct()
     {
         require_once __DIR__ . '/vendor/autoload.php';
-        
+
         $this->define_constants();
 
         register_activation_hook(__FILE__, [$this, 'activate']);
 
         add_action('plugins_loaded', [$this, 'init_plugin']);
         add_filter('script_loader_tag', array($this, 'addModuleToScript'), 10, 3);
-
     }
 
     public function addModuleToScript($tag, $handle, $src)
@@ -98,9 +97,9 @@ final class Quizbit
         if (is_admin()) {
             new Quizbit\Admin();
         }
-        else {
-            new Quizbit\User();
-        }
+
+        new Quizbit\User();
+        new Quizbit\API();
     }
 
     /**

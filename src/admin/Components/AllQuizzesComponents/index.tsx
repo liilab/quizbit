@@ -65,9 +65,13 @@ export default function AllQuizzesFunction() {
 
   const [rows, setRows] = React.useState<Data[]>([]);
 
+  const home_url = (window as any).userLocalize.home_url;
+
+  
+
   React.useEffect(() => {
     axios
-      .get("http://localhost/wordpress/wp-json/quizbit/v1/quiz/all-quizes")
+      .get(home_url + "/wp-json/quizbit/v1/quiz/all-quzzes")
       .then((response) => {
         const responseData = response.data; // Store the response data
 
@@ -92,7 +96,7 @@ export default function AllQuizzesFunction() {
 
   function deleteQuiz(id: string) {
     axios
-      .delete(`http://localhost/wordpress/wp-json/quizbit/v1/quiz/delete/${id}`)
+      .delete(home_url + `/wp-json/quizbit/v1/quiz/delete/${id}`)
       .then((response) => {
         console.log(response);
         setRefresh(!refresh);

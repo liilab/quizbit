@@ -17,42 +17,42 @@ interface Quiz {
 
 
 interface Props {
-  newQuizes: Quiz[];
-  setNewQuizes: (newQuizes: Quiz[]) => void;
+  newQuzzes: Quiz[];
+  setNewQuzzes: (newQuzzes: Quiz[]) => void;
 }
 
 export default function NewQuiz(props: Props) {
-  const [allQuizes, setAllQuizes] = useState<Quiz[]>([
+  const [allQuzzes, setAllQuzzes] = useState<Quiz[]>([
     { title: "", options: [] },
   ]);
 
   const handleAddQuiz = () => {
-    setAllQuizes([...allQuizes, { title: "", options: [] }]);
+    setAllQuzzes([...allQuzzes, { title: "", options: [] }]);
   };
 
   const handleInputChange = (index: number, field: string, value: string) => {
-    const updatedAllQuizes = [...allQuizes];
-    updatedAllQuizes[index] = { ...updatedAllQuizes[index], [field]: value };
-    setAllQuizes(updatedAllQuizes);
+    const updatedAllQuzzes = [...allQuzzes];
+    updatedAllQuzzes[index] = { ...updatedAllQuzzes[index], [field]: value };
+    setAllQuzzes(updatedAllQuzzes);
   };
 
   const handleDeleteInput = (index: number) => {
-    const updatedAllQuizes = [...allQuizes];
-    updatedAllQuizes.splice(index, 1);
-    setAllQuizes(updatedAllQuizes);
+    const updatedAllQuzzes = [...allQuzzes];
+    updatedAllQuzzes.splice(index, 1);
+    setAllQuzzes(updatedAllQuzzes);
   };
 
   const handleUpdateOptions = (index: number, options: Option[]) => {
-    const updatedAllQuizes = [...allQuizes];
-    updatedAllQuizes[index].options = options;
-    setAllQuizes(updatedAllQuizes);
+    const updatedAllQuzzes = [...allQuzzes];
+    updatedAllQuzzes[index].options = options;
+    setAllQuzzes(updatedAllQuzzes);
   };
 
-  props.setNewQuizes(allQuizes);
+  props.setNewQuzzes(allQuzzes);
 
   return (
     <>
-      {allQuizes.map((quiz, index) => (
+      {allQuzzes.map((quiz, index) => (
         <div key={index} className="gap-2 mb-5">
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">

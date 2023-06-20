@@ -1,10 +1,10 @@
 <?php
 
-namespace Quizbit\Admin\API;
+namespace Quizbit\API;
 
 use Quizbit\Abstracts\RestController;
 use WP_REST_Server;
-use Quizbit\Admin\Database\Quiz\Quiz as QuizDB;
+use Quizbit\Database\Quiz\Quiz as QuizDB;
 
 /**
  * The UserInfo API class
@@ -64,7 +64,7 @@ class Quiz extends RestController
 
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base . '/all-quizes',
+            '/' . $this->rest_base . '/all-quzzes',
             array(
                 array(
                     'methods'             => WP_REST_Server::READABLE,
@@ -219,7 +219,7 @@ class Quiz extends RestController
                     'description' => 'The description of the quiz.',
                     'required'    => true,
                 ),
-                'quizes' => array(
+                'quzzes' => array(
                     'type'        => 'array',
                     'description' => 'The list of quiz questions and options.',
                     'items'       => array(

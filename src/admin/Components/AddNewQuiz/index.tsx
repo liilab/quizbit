@@ -19,7 +19,7 @@ export default function Form() {
   const [showDescription, setShowDescription] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [newQuizes, setNewQuizes] = useState<Quiz[]>([
+  const [newQuzzes, setNewQuzzes] = useState<Quiz[]>([
     { title: "", options: [] },
   ]);
 
@@ -28,7 +28,7 @@ export default function Form() {
     const quizData = {
       title: title,
       description: description,
-      quizes: newQuizes,
+      quzzes: newQuzzes,
     };
   
     // Make the API request to save the quiz data
@@ -48,7 +48,7 @@ export default function Form() {
   const data = {
     title: title,
     description: description,
-    quizes: newQuizes,
+    quzzes: newQuzzes,
   };
 
   const formSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -98,7 +98,7 @@ export default function Form() {
                 </button>
               )}
             </div>
-            <NewQuiz newQuizes={newQuizes} setNewQuizes={setNewQuizes} />
+            <NewQuiz newQuzzes={newQuzzes} setNewQuzzes={setNewQuzzes} />
           </div>
         </div>
       </div>

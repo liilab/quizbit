@@ -2,7 +2,7 @@
 
 namespace Quizbit;
 use Quizbit\Traits\Singleton;
-use Quizbit\User\Shortcode, Quizbit\User\API;
+use Quizbit\User\Shortcode;
 
 /**
  * The User class
@@ -16,6 +16,5 @@ class User {
      */
     function __construct() {
         new Shortcode();
-        new API();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Quizbit\Admin\Database\Quiz;
+namespace Quizbit\Database\Quiz;
 
 class Quiz
 {
@@ -23,7 +23,7 @@ class Quiz
         $quizId = $wpdb->insert_id;
 
         // Insert the quiz questions and options into the respective tables
-        foreach ($data['quizes'] as $quiz) {
+        foreach ($data['quzzes'] as $quiz) {
             // Insert the question into the `quizbit_questions` table
             $wpdb->insert(
                 $wpdb->prefix . 'quizbit_questions',

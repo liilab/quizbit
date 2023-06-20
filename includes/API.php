@@ -1,6 +1,6 @@
 <?php
 
-namespace Quizbit\Admin;
+namespace Quizbit;
 
 use Quizbit\Traits\Singleton;
 

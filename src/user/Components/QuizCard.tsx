@@ -28,7 +28,7 @@ const FIVE_MINUTES = 100; // 5 minutes in milliseconds
 export default function QuizCard(id: any) {
   const [quizData, setQuizData] = useState<Quiz>();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedQuizes, setSelectedQuizes] = useState<number[]>([]);
+  const [selectedQuzzes, setSelectedQuzzes] = useState<number[]>([]);
   const [scores, setScores] = useState(0);
   const [showResults, setShowResults] = useState(false);
 
@@ -36,11 +36,11 @@ export default function QuizCard(id: any) {
   const home_url = (window as any).userLocalize.home_url;
 
   const handleQuizSelect = (quizId: number) => {
-    setSelectedQuizes((prevSelectedQuizes) => [...prevSelectedQuizes, quizId]);
+    setSelectedQuzzes((prevSelectedQuzzes) => [...prevSelectedQuzzes, quizId]);
   };
 
   const isQuizSelected = (quizId: number) => {
-    return selectedQuizes.includes(quizId);
+    return selectedQuzzes.includes(quizId);
   };
 
   useEffect(() => {
@@ -73,7 +73,7 @@ export default function QuizCard(id: any) {
   //   const storedState = localStorage.getItem("quizState");
   //   if (storedState) {
   //     const parsedState = JSON.parse(storedState);
-  //     setSelectedQuizes(parsedState.selectedQuizes || []);
+  //     setSelectedQuzzes(parsedState.selectedQuzzes || []);
   //     setScores(parsedState.scores || 0);
   //     setCurrentQuestionIndex(parsedState.currentQuestionIndex || 0);
   //   }
@@ -81,12 +81,12 @@ export default function QuizCard(id: any) {
 
   // useEffect(() => {
   //   const stateToStore = {
-  //     selectedQuizes,
+  //     selectedQuzzes,
   //     scores,
   //     currentQuestionIndex,
   //   };
   //   localStorage.setItem("quizState", JSON.stringify(stateToStore));
-  // }, [selectedQuizes, scores, currentQuestionIndex]);
+  // }, [selectedQuzzes, scores, currentQuestionIndex]);
 
   // useEffect(() => {
   //   const expirationTimer = setTimeout(() => {
@@ -164,10 +164,10 @@ export default function QuizCard(id: any) {
                         Correct - {scores}
                       </li>
                       <li className="text-[#EF4444] text-2xl font-medium list-outside list-disc ml-6">
-                        Wrong - {selectedQuizes.length - scores}
+                        Wrong - {selectedQuzzes.length - scores}
                       </li>
                       <li className="text-[#6B7280] text-2xl font-medium list-outside list-disc ml-6">
-                        Skippped - {quizLength - selectedQuizes.length}
+                        Skippped - {quizLength - selectedQuzzes.length}
                       </li>
                     </ul>
                   </div>
