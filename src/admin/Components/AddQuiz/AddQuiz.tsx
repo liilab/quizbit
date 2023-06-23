@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../../../Shared/Input";
 import NewQuiz from "./NewQuiz";
 import axios from "axios";
+import Button from "../../../shared/Button";
 
 
 interface Option {
@@ -62,20 +63,14 @@ export default function Form() {
   return (
     <form onSubmit={(e) => formSubmit(e)}>
       <div>
-        <div className="mt-10 md:m-10 p-5 bg-[#fff] lg:w-[50%]">
+        <div className="bg-[#fff] lg:w-[70%]">
           <div className="flex flex-col gap-5 p-5">
             <div className="flex justify-between">
-              <h2 className="font-bold text-[#6E6E6E]">Quiz Setup</h2>
-              <button
-                onClick={handleAddQuiz}
-                className="bg-[#ECECFC] text-primary font-bold border-[1px] border-primary rounded-md p-2 px-10"
-                type="submit"
-              >
-                Save Quiz
-              </button>
+              <h2 className="font-bold text-secondary-200">Quiz Setup</h2>
+              <Button onClick={handleAddQuiz}>Save Quiz</Button>
             </div>
             <div className="flex flex-col gap-2 mb-5">
-              <h2 className="font-bold text-[#6E6E6E]">Title</h2>
+              <h2 className="font-bold text-secondary-200">Title</h2>
               <Input
                 value={title}
                 type="text"

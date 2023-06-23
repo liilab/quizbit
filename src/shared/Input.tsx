@@ -19,7 +19,7 @@ export default function Input(props: InputProps) {
         value={props.value}
         onChange={props.onChange}
         style={{ padding: "12px", borderColor: borderColor , height: "100px" }}
-        className={`${borderColor} ${isQuestion} border-[1px] rounded-md p-3 placeholder-[#333333] placeholder-opacity-30`}
+        className={`${borderColor} ${isQuestion} border-[1px] rounded-md p-3 placeholder-secondary-300 placeholder-opacity-30`}
         placeholder={props.placeholder}
       />
     );
@@ -31,7 +31,7 @@ export default function Input(props: InputProps) {
       value={props.value}
       onChange={props.onChange}
       style={{ padding: "12px", borderColor: borderColor }}
-      className={`${borderColor} ${isQuestion} border-[1px] rounded-md p-3 placeholder-[#333333] placeholder-opacity-30`}
+      className={`${borderColor} ${isQuestion} border-[1px] rounded-md p-3 placeholder-secondary-300 placeholder-opacity-30`}
       placeholder={props.placeholder}
     />
   );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../../../Shared/Input";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckBox from "../../../Shared/CheckBox";
+import Button from "../../../shared/Button";
 
 interface Option {
   value: string;
@@ -68,13 +69,10 @@ export default function Options(props: OptionsProps) {
           </div>
         </div>
       ))}
-      <div>
-        <button
-          onClick={handleAddInput}
-          className="bg-[#ECECFC] text-primary mt-10 font-bold border-[1px] border-dashed border-primary rounded-md p-2 px-16"
-        >
+      <div className="mt-10">
+        <Button onClick={handleAddInput} classes="border-dashed">
           + Add Options
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -1,15 +1,20 @@
 import React from "react";
-import Layout from "../Components/Layout";
+import WpWrapper from "../Components/Layout/WpWrapper";
 import Navbar from "../Components/Navbar";
-import AllQuizzesComponent from "../Components/AllQuizzes";
+import AllQuizzesContainer from "../Components/AllQuizzes";
 
 export default function AllQuizzes() {
+  const menus = [
+    {
+      name: "Add New Quiz",
+      path: "/add-new",
+    },
+  ];
+
   return (
-    <Layout>
-      <Navbar />
-      <div className="p-1 mt-5">
-        <AllQuizzesComponent />
-      </div>
-    </Layout>
+    <WpWrapper>
+      <Navbar menus={menus} border_color="purple" />
+        <AllQuizzesContainer />
+    </WpWrapper>
   );
 }

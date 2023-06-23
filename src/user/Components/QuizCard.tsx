@@ -113,7 +113,7 @@ export default function QuizCard(id: any) {
               </h5>
               <div>
                 <div className="flex items-start">
-                  <h2 className="font-bold text-[#6E6E6E]">
+                  <h2 className="font-bold text-primary-500">
                     Question {currentQuestionIndex + 1}
                   </h2>
                   <button

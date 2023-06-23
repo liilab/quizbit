@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Input from "../../../Shared/Input";
 import Options from "./Options";
 import CloseIcon from "@mui/icons-material/Close";
-
+import Button from "../../../shared/Button";
 
 interface Option {
   value: string;
@@ -13,8 +13,6 @@ interface Quiz {
   title: string;
   options: Option[];
 }
-
-
 
 interface Props {
   newQuzzes: Quiz[];
@@ -56,7 +54,9 @@ export default function NewQuiz(props: Props) {
         <div key={index} className="gap-2 mb-5">
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
-              <h2 className="font-bold text-[#6E6E6E]">Question {index + 1}</h2>
+              <h2 className="font-bold text-secondary-200">
+                Question {index + 1}
+              </h2>
               <CloseIcon
                 className="cursor-pointer"
                 sx={{ color: "#6E6E6E" }}
@@ -81,12 +81,7 @@ export default function NewQuiz(props: Props) {
         </div>
       ))}
       <div className="lg:ms-auto">
-        <button
-          onClick={handleAddQuiz}
-          className="bg-[#ECECFC] text-primary font-bold border-[1px] border-primary rounded-md p-2 px-8"
-        >
-          Add New Question
-        </button>
+        <Button onClick={handleAddQuiz}> Add New Question</Button>
       </div>
     </>
   );
