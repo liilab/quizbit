@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../Components/Layout";
 import Navbar from "../Components/Navbar";
-import AllQuizzesComponent from "../Components/AllQuizzesComponents";
+import AllQuizzesComponent from "../Components/AllQuizzes";
 
 export default function AllQuizzes() {
   return (
