@@ -4,7 +4,7 @@ import { NavbarProps } from "./types";
 
 export default function Navbar({ menus, border_color }: NavbarProps) {
   const color =
-    border_color === "purple" ? "border-primary-900" : "border-blue-500";
+    border_color === "purple" ? "border-primary-500" : "border-blue-500";
 
   return (
     <div

@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import AllQuizzes from "./pages/all-quizzes";
 import AddNew from "./pages/add-new";
 
-import MenuRouter  from "./Routes/Router";
+import MenuRouter from "./routes/Router";
 import "./admin.scss";
 
 const MenuLists = [

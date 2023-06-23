@@ -25,7 +25,6 @@ export default function Form() {
   ]);
 
   const handleAddQuiz = () => {
-    // Create the quiz data object
     const quizData = {
       title: title,
       description: description,
@@ -35,16 +34,13 @@ export default function Form() {
     const home_url = (window as any).userLocalize.home_url;
     const site_url = (window as any).userLocalize.site_url;
 
-  
-    // Make the API request to save the quiz data
     axios
       .post(home_url + "/wp-json/quizbit/v1/quiz", quizData)
-      .then((response) => {
+      .then(() => {
         window.location.href = site_url + '/wp-admin/admin.php?page=quizbit#/all-quizzes';
       })
       .catch((error) => {
-        // Handle the error response
-        console.error(error); // You can customize this based on your needs
+        console.error(error);
       });
   };
   
