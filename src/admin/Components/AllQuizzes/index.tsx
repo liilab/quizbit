@@ -10,7 +10,6 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 import QuizTableRow from "./QuizTableRow";
-import AddQuizWrapper from "../AddQuiz/AddQuizWrapper";
 import { redirect } from "react-router-dom";
 
 interface Column {
@@ -143,7 +142,7 @@ export default function AllQuizzesFunction() {
       />
       {editQuizId && (
         <div>
-          <AddQuizWrapper id={editQuizId} />
+          {/* <AddQuizWrapper id={editQuizId} /> */}
         </div>
       )}
     </Paper>

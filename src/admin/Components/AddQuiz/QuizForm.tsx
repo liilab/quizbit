@@ -2,9 +2,22 @@ import React from "react";
 import Input from "../../../Shared/Input";
 import NewQuiz from "./NewQuiz";
 import Button from "../../../shared/Button";
-import useQuizForm from "../../hooks/useQuizForm";
 
-export default function Form({ id }) {
+interface QuizFormProps {
+  showDescription: boolean;
+  setShowDescription: (showDescription: boolean) => void;
+  title: string;
+  setTitle: (title: string) => void;
+  description: string;
+  setDescription: (description: string) => void;
+  newQuizzes: any;
+  setNewQuizzes: (newQuizzes: any) => void;
+  handleSaveQuiz: () => void;
+  handleQuizButtonText: string;
+  formSubmit: (e: any) => void;
+}
+
+export default function Form(props: QuizFormProps) {
   const {
     showDescription,
     setShowDescription,
@@ -14,10 +27,10 @@ export default function Form({ id }) {
     setDescription,
     newQuizzes,
     setNewQuizzes,
-    handleAddQuiz,
-    handleUpdateQuiz,
+    handleSaveQuiz,
+    handleQuizButtonText,
     formSubmit,
-  } = useQuizForm(id);
+  } = props;
 
   return (
     <form onSubmit={(e) => formSubmit(e)}>
@@ -26,11 +39,7 @@ export default function Form({ id }) {
           <div className="flex flex-col gap-5 p-5">
             <div className="flex justify-between">
               <h2 className="font-bold text-secondary-200">Quiz Setup</h2>
-              {id ? (
-               <Button onClick={() => handleUpdateQuiz(id)}>Update Quiz</Button>
-              ) : (
-                <Button onClick={handleAddQuiz}>Save Quiz</Button>
-              )}
+               <Button onClick={handleSaveQuiz}>{handleQuizButtonText}</Button>
             </div>
             <div className="flex flex-col gap-2 mb-5">
               <h2 className="font-bold text-secondary-200">Title</h2>

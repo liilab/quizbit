@@ -8,28 +8,20 @@ class Quiz
     public function insert_quiz_data($data)
     {
         global $wpdb;
-
-        // Insert the quiz into the `quizbit_quizzes` table
         $wpdb->insert(
             $wpdb->prefix . 'quizbit_quizzes',
             array(
                 'title' => $data['title'],
                 'description' => $data['description'],
-                'author' => 'admin',
             )
         );
-
-        // Get the ID of the inserted quiz
         $quizId = $wpdb->insert_id;
-
-        // Insert the quiz questions and options into the respective tables
-        foreach ($data['quizzes'] as $quiz) {
-            // Insert the question into the `quizbit_questions` table
+        foreach ($data['questions'] as $quiz) {
             $wpdb->insert(
                 $wpdb->prefix . 'quizbit_questions',
                 array(
                     'quiz_id' => $quizId,
-                    'question_text' => $quiz['title'],
+                    'title' => $quiz['title'],
                 )
             );
 
@@ -42,8 +34,10 @@ class Quiz
                     $wpdb->prefix . 'quizbit_options',
                     array(
                         'question_id' => $questionId,
-                        'option_text' => $option['value'],
-                        'is_correct' => $option['isCorrect'] ? 1 : 0,
+                        // 'option_text' => $option['value'],
+                        // 'is_correct' => $option['isCorrect'] ? 1 : 0,
+                        'value' => $option['value'],
+                        'isCorrect' => $option['isCorrect'] ? 1 : 0,
                     )
                 );
             }
@@ -64,38 +58,40 @@ class Quiz
     public function get_quiz_data($quizId)
     {
         global $wpdb;
-
-        // Get the quiz data from the `quizbit_quizzes` table
+    
+        // Get the quiz data from the `quizbit_quizzes` table without the 'id' column
         $quiz = $wpdb->get_row(
             $wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}quizbit_quizzes WHERE id = %d",
+                "SELECT title, description FROM {$wpdb->prefix}quizbit_quizzes WHERE id = %d",
                 $quizId
             )
         );
-
-        // Get the quiz questions from the `quizbit_questions` table
+    
+        // Get the quiz questions from the `quizbit_questions` table without the 'id' and 'quiz_id' columns
         $questions = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}quizbit_questions WHERE quiz_id = %d",
+                "SELECT title, id FROM {$wpdb->prefix}quizbit_questions WHERE quiz_id = %d",
                 $quizId
             )
         );
-
-        // Get the quiz options from the `quizbit_options` table
+    
+        // Get the quiz options from the `quizbit_options` table without the 'id' and 'question_id' columns
         foreach ($questions as $question) {
             $question->options = $wpdb->get_results(
                 $wpdb->prepare(
-                    "SELECT * FROM {$wpdb->prefix}quizbit_options WHERE question_id = %d",
+                    "SELECT value, isCorrect FROM {$wpdb->prefix}quizbit_options WHERE question_id = %d",
                     $question->id
                 )
             );
+            unset($question->id); // Remove the 'id' property from the question object
         }
-
+    
         // Add the questions to the quiz object
         $quiz->questions = $questions;
-
+    
         return $quiz;
     }
+    
 
 
     public function delete_quiz($quizId)
@@ -141,68 +137,6 @@ class Quiz
                 'id' => $quizId,
             )
         );
-
-        return true;
-    }
-
-    public function update_quiz_data($data)
-    {
-        global $wpdb;
-
-        // Update the quiz data in the `quizbit_quizzes` table
-        $wpdb->update(
-            $wpdb->prefix . 'quizbit_quizzes',
-            array(
-                'title' => $data['title'],
-                'description' => $data['description'],
-            ),
-            array(
-                'id' => $data['id'],
-            )
-        );
-
-        // Delete the questions associated with the quiz
-        $wpdb->delete(
-            $wpdb->prefix . 'quizbit_questions',
-            array(
-                'quiz_id' => $data['id'],
-            )
-        );
-
-        // Delete the options associated with the questions
-        $wpdb->delete(
-            $wpdb->prefix . 'quizbit_options',
-            array(
-                'question_id' => $data['id'],
-            )
-        );
-
-        // Insert the quiz questions and options into the respective tables
-        foreach ($data['quizzes'] as $quiz) {
-            // Insert the question into the `quizbit_questions` table
-            $wpdb->insert(
-                $wpdb->prefix . 'quizbit_questions',
-                array(
-                    'quiz_id' => $data['id'],
-                    'question_text' => $quiz['title'],
-                )
-            );
-
-            // Get the ID of the inserted question
-            $questionId = $wpdb->insert_id;
-
-            // Insert the options into the `quizbit_options` table
-            foreach ($quiz['options'] as $option) {
-                $wpdb->insert(
-                    $wpdb->prefix . 'quizbit_options',
-                    array(
-                        'question_id' => $questionId,
-                        'option_text' => $option['value'],
-                        'is_correct' => $option['isCorrect'] ? 1 : 0,
-                    )
-                );
-            }
-        }
 
         return true;
     }

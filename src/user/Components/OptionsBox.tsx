@@ -3,8 +3,8 @@ import React from "react";
 interface Option {
   id: number;
   question_id: number;
-  option_text: string;
-  is_correct: string;
+  value: string;
+  isCorrect: string;
 }
 
 interface OptionsBoxProps {
@@ -33,7 +33,7 @@ export default function OptionsBox({
   const handleSelect = () => {
     if (!selected) {
       onSelect(option.id);
-      if (option.is_correct === "1") {
+      if (option.isCorrect === "1") {
         handleScores(scores + 1);
       }
     }
@@ -43,7 +43,7 @@ export default function OptionsBox({
   };
 
   const borderColor = selectedAny
-    ? option.is_correct === "1"
+    ? option.isCorrect === "1"
       ? "green"
       : "red"
     : "gray";
@@ -73,7 +73,7 @@ export default function OptionsBox({
           borderColor: borderColor,
         }}
       >
-        {option.option_text}
+        {option.value}
       </p>
     </>
   );

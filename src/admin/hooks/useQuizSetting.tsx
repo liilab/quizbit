@@ -16,8 +16,11 @@ interface NewQuizProps {
   setNewQuizzes: (newQuizzes: Quiz[]) => void;
 }
 
-export default function useQuizSetting({ setNewQuizzes }: NewQuizProps) {
-  const [allQuizzes, setAllQuizzes] = useState<Quiz[]>([{ title: "", options: [] }]);
+export default function useQuizSetting({ newQuizzes, setNewQuizzes }: NewQuizProps) {
+
+    
+    const [allQuizzes, setAllQuizzes] = useState<Quiz[]>([{ title: "", options: [] }]);
+    
 
   const handleAddQuiz = () => {
     setAllQuizzes([...allQuizzes, { title: "", options: [] }]);

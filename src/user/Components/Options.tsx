@@ -4,8 +4,8 @@ import OptionsBox from "./OptionsBox";
 interface Option {
   id: number;
   question_id: number;
-  option_text: string;
-  is_correct: string;
+  value: string;
+  isCorrect: string;
 }
 
 interface OptionsProps {

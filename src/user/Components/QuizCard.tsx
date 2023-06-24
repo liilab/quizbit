@@ -6,14 +6,14 @@ import { FaChevronCircleLeft } from "react-icons/fa";
 interface Option {
   id: number;
   question_id: number;
-  option_text: string;
-  is_correct: string;
+  value: string;
+  isCorrect: string;
 }
 
 interface Questions {
   id: number;
   quiz_id: number;
-  question_text: string;
+  title: string;
   options: Option[];
 }
 
@@ -78,7 +78,7 @@ export default function QuizCard(id: any) {
               </h5>
               <hr className="h-px my-6 bg-gray-700 border-0" />
               <h5 className="mb-4 text-md text-slate-950 font-bold tracking-tight">
-                {quizData?.questions[currentQuestionIndex].question_text}
+                {quizData?.questions[currentQuestionIndex].title}
               </h5>
               <div>
                 <div className="flex items-start">

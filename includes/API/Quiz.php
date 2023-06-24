@@ -120,44 +120,6 @@ class Quiz extends RestController
                 ),
             )
         );
-
-        //update quiz by id
-
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base . '/update/(?P<id>\d+)',
-            array(
-                array(
-                    'methods'             => WP_REST_Server::EDITABLE,
-                    'callback'            => array($this, 'update_quiz'),
-                    'permission_callback' => array($this, 'get_permissions'),
-                    'args'                => array(
-                        'id' => array(
-                            'description' => __('Unique identifier for the object.'),
-                            'type'        => 'integer',
-                        ),
-                    ),
-                    'schema'              => array($this, 'get_item_schema'),
-                ),
-            )
-        );
-    }
-
-    public function update_quiz($request)
-    {
-        $params = $request->get_params();
-
-        $quiz = $this->quizDB;
-
-        $response = $quiz->update_quiz_data($params);
-
-        $data = array(
-            'status' => 'success',
-            'message' => 'Quiz updated successfully.',
-            'data' => $params,
-        );
-
-        return new \WP_REST_Response($data, 200);
     }
 
 
@@ -257,7 +219,7 @@ class Quiz extends RestController
                     'description' => 'The description of the quiz.',
                     'required'    => true,
                 ),
-                'quizzes' => array(
+                'quzzes' => array(
                     'type'        => 'array',
                     'description' => 'The list of quiz questions and options.',
                     'items'       => array(
