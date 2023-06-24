@@ -3,6 +3,7 @@ import Input from "../../../Shared/Input";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckBox from "../../../Shared/CheckBox";
 import Button from "../../../shared/Button";
+import useOptionSetting from "../../hooks/useOptionSetting";
 
 interface Option {
   value: string;
@@ -15,35 +16,13 @@ interface OptionsProps {
 }
 
 export default function Options(props: OptionsProps) {
-  const [inputAreas, setInputAreas] = useState<Option[]>([
-    { value: "", isCorrect: false },
-    { value: "", isCorrect: false },
-  ]);
-
-  const handleAddInput = () => {
-    setInputAreas([...inputAreas, { value: "", isCorrect: false }]);
-  };
-
-  const handleInputChange = (index: number, value: string) => {
-    const updatedInputAreas = [...inputAreas];
-    updatedInputAreas[index].value = value;
-    setInputAreas(updatedInputAreas);
-    props.setOptions(updatedInputAreas);
-  };
-
-  const handleCheckboxChange = (index: number) => {
-    const updatedInputAreas = [...inputAreas];
-    updatedInputAreas[index].isCorrect = !updatedInputAreas[index].isCorrect;
-    setInputAreas(updatedInputAreas);
-    props.setOptions(updatedInputAreas);
-  };
-
-  const handleDeleteInput = (index: number) => {
-    const updatedInputAreas = [...inputAreas];
-    updatedInputAreas.splice(index, 1);
-    setInputAreas(updatedInputAreas);
-    props.setOptions(updatedInputAreas);
-  };
+  const {
+    inputAreas,
+    handleAddInput,
+    handleInputChange,
+    handleCheckboxChange,
+    handleDeleteInput,
+  } = useOptionSetting(props);
 
   return (
     <div>

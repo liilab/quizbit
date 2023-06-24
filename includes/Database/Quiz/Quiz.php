@@ -23,7 +23,7 @@ class Quiz
         $quizId = $wpdb->insert_id;
 
         // Insert the quiz questions and options into the respective tables
-        foreach ($data['quzzes'] as $quiz) {
+        foreach ($data['quizzes'] as $quiz) {
             // Insert the question into the `quizbit_questions` table
             $wpdb->insert(
                 $wpdb->prefix . 'quizbit_questions',
@@ -141,6 +141,68 @@ class Quiz
                 'id' => $quizId,
             )
         );
+
+        return true;
+    }
+
+    public function update_quiz_data($data)
+    {
+        global $wpdb;
+
+        // Update the quiz data in the `quizbit_quizzes` table
+        $wpdb->update(
+            $wpdb->prefix . 'quizbit_quizzes',
+            array(
+                'title' => $data['title'],
+                'description' => $data['description'],
+            ),
+            array(
+                'id' => $data['id'],
+            )
+        );
+
+        // Delete the questions associated with the quiz
+        $wpdb->delete(
+            $wpdb->prefix . 'quizbit_questions',
+            array(
+                'quiz_id' => $data['id'],
+            )
+        );
+
+        // Delete the options associated with the questions
+        $wpdb->delete(
+            $wpdb->prefix . 'quizbit_options',
+            array(
+                'question_id' => $data['id'],
+            )
+        );
+
+        // Insert the quiz questions and options into the respective tables
+        foreach ($data['quizzes'] as $quiz) {
+            // Insert the question into the `quizbit_questions` table
+            $wpdb->insert(
+                $wpdb->prefix . 'quizbit_questions',
+                array(
+                    'quiz_id' => $data['id'],
+                    'question_text' => $quiz['title'],
+                )
+            );
+
+            // Get the ID of the inserted question
+            $questionId = $wpdb->insert_id;
+
+            // Insert the options into the `quizbit_options` table
+            foreach ($quiz['options'] as $option) {
+                $wpdb->insert(
+                    $wpdb->prefix . 'quizbit_options',
+                    array(
+                        'question_id' => $questionId,
+                        'option_text' => $option['value'],
+                        'is_correct' => $option['isCorrect'] ? 1 : 0,
+                    )
+                );
+            }
+        }
 
         return true;
     }

@@ -1,60 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../../../Shared/Input";
 import NewQuiz from "./NewQuiz";
-import axios from "axios";
 import Button from "../../../shared/Button";
+import useQuizForm from "../../hooks/useQuizForm";
 
-
-interface Option {
-  value: string;
-  isCorrect: boolean;
-}
-
-interface Quiz {
-  title: string;
-  options: Option[];
-}
-
-
-export default function Form() {
-  const [showDescription, setShowDescription] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [newQuzzes, setNewQuzzes] = useState<Quiz[]>([
-    { title: "", options: [] },
-  ]);
-
-  const handleAddQuiz = () => {
-    const quizData = {
-      title: title,
-      description: description,
-      quzzes: newQuzzes,
-    };
-
-    const home_url = (window as any).userLocalize.home_url;
-    const site_url = (window as any).userLocalize.site_url;
-
-    axios
-      .post(home_url + "/wp-json/quizbit/v1/quiz", quizData)
-      .then(() => {
-        window.location.href = site_url + '/wp-admin/admin.php?page=quizbit#/all-quizzes';
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-  
-
-  const data = {
-    title: title,
-    description: description,
-    quzzes: newQuzzes,
-  };
-
-  const formSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(data);
-  };
+export default function Form({ id }) {
+  const {
+    showDescription,
+    setShowDescription,
+    title,
+    setTitle,
+    description,
+    setDescription,
+    newQuizzes,
+    setNewQuizzes,
+    handleAddQuiz,
+    handleUpdateQuiz,
+    formSubmit,
+  } = useQuizForm(id);
 
   return (
     <form onSubmit={(e) => formSubmit(e)}>
@@ -63,7 +26,11 @@ export default function Form() {
           <div className="flex flex-col gap-5 p-5">
             <div className="flex justify-between">
               <h2 className="font-bold text-secondary-200">Quiz Setup</h2>
-              <Button onClick={handleAddQuiz}>Save Quiz</Button>
+              {id ? (
+               <Button onClick={() => handleUpdateQuiz(id)}>Update Quiz</Button>
+              ) : (
+                <Button onClick={handleAddQuiz}>Save Quiz</Button>
+              )}
             </div>
             <div className="flex flex-col gap-2 mb-5">
               <h2 className="font-bold text-secondary-200">Title</h2>
@@ -92,7 +59,7 @@ export default function Form() {
                 </button>
               )}
             </div>
-            <NewQuiz newQuzzes={newQuzzes} setNewQuzzes={setNewQuzzes} />
+            <NewQuiz newQuizzes={newQuizzes} setNewQuizzes={setNewQuizzes} />
           </div>
         </div>
       </div>

@@ -23,12 +23,10 @@ interface Quiz {
   questions: Questions[];
 }
 
-const FIVE_MINUTES = 100; // 5 minutes in milliseconds
-
 export default function QuizCard(id: any) {
   const [quizData, setQuizData] = useState<Quiz>();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedQuzzes, setSelectedQuzzes] = useState<number[]>([]);
+  const [selectedQuizzes, setSelectedQuizzes] = useState<number[]>([]);
   const [scores, setScores] = useState(0);
   const [showResults, setShowResults] = useState(false);
 
@@ -36,11 +34,11 @@ export default function QuizCard(id: any) {
   const home_url = (window as any).userLocalize.home_url;
 
   const handleQuizSelect = (quizId: number) => {
-    setSelectedQuzzes((prevSelectedQuzzes) => [...prevSelectedQuzzes, quizId]);
+    setSelectedQuizzes((prevSelectedQuizzes) => [...prevSelectedQuizzes, quizId]);
   };
 
   const isQuizSelected = (quizId: number) => {
-    return selectedQuzzes.includes(quizId);
+    return selectedQuizzes.includes(quizId);
   };
 
   useEffect(() => {
@@ -68,35 +66,6 @@ export default function QuizCard(id: any) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
-
-  // useEffect(() => {
-  //   const storedState = localStorage.getItem("quizState");
-  //   if (storedState) {
-  //     const parsedState = JSON.parse(storedState);
-  //     setSelectedQuzzes(parsedState.selectedQuzzes || []);
-  //     setScores(parsedState.scores || 0);
-  //     setCurrentQuestionIndex(parsedState.currentQuestionIndex || 0);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const stateToStore = {
-  //     selectedQuzzes,
-  //     scores,
-  //     currentQuestionIndex,
-  //   };
-  //   localStorage.setItem("quizState", JSON.stringify(stateToStore));
-  // }, [selectedQuzzes, scores, currentQuestionIndex]);
-
-  // useEffect(() => {
-  //   const expirationTimer = setTimeout(() => {
-  //     localStorage.removeItem("quizState");
-  //   }, FIVE_MINUTES);
-
-  //   return () => {
-  //     clearTimeout(expirationTimer);
-  //   };
-  // }, []);
 
   return (
     <div>
@@ -164,10 +133,10 @@ export default function QuizCard(id: any) {
                         Correct - {scores}
                       </li>
                       <li className="text-[#EF4444] text-2xl font-medium list-outside list-disc ml-6">
-                        Wrong - {selectedQuzzes.length - scores}
+                        Wrong - {selectedQuizzes.length - scores}
                       </li>
                       <li className="text-[#6B7280] text-2xl font-medium list-outside list-disc ml-6">
-                        Skippped - {quizLength - selectedQuzzes.length}
+                        Skippped - {quizLength - selectedQuizzes.length}
                       </li>
                     </ul>
                   </div>

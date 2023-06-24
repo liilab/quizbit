@@ -3,6 +3,7 @@ import Input from "../../../Shared/Input";
 import Options from "./Options";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "../../../shared/Button";
+import useQuizSetting  from "../../hooks/useQuizSetting";
 
 interface Option {
   value: string;
@@ -14,43 +15,24 @@ interface Quiz {
   options: Option[];
 }
 
-interface Props {
-  newQuzzes: Quiz[];
-  setNewQuzzes: (newQuzzes: Quiz[]) => void;
+interface NewQuizProps {
+  newQuizzes: Quiz[];
+  setNewQuizzes: (newQuizzes: Quiz[]) => void;
 }
 
-export default function NewQuiz(props: Props) {
-  const [allQuzzes, setAllQuzzes] = useState<Quiz[]>([
-    { title: "", options: [] },
-  ]);
+export default function NewQuiz({ newQuizzes, setNewQuizzes }: NewQuizProps) {
 
-  const handleAddQuiz = () => {
-    setAllQuzzes([...allQuzzes, { title: "", options: [] }]);
-  };
-
-  const handleInputChange = (index: number, field: string, value: string) => {
-    const updatedAllQuzzes = [...allQuzzes];
-    updatedAllQuzzes[index] = { ...updatedAllQuzzes[index], [field]: value };
-    setAllQuzzes(updatedAllQuzzes);
-  };
-
-  const handleDeleteInput = (index: number) => {
-    const updatedAllQuzzes = [...allQuzzes];
-    updatedAllQuzzes.splice(index, 1);
-    setAllQuzzes(updatedAllQuzzes);
-  };
-
-  const handleUpdateOptions = (index: number, options: Option[]) => {
-    const updatedAllQuzzes = [...allQuzzes];
-    updatedAllQuzzes[index].options = options;
-    setAllQuzzes(updatedAllQuzzes);
-  };
-
-  props.setNewQuzzes(allQuzzes);
+ const {
+    allQuizzes,
+    handleAddQuiz,
+    handleInputChange,
+    handleDeleteInput,
+    handleUpdateOptions,
+  } = useQuizSetting({ newQuizzes, setNewQuizzes });
 
   return (
     <>
-      {allQuzzes.map((quiz, index) => (
+      {allQuizzes.map((quiz, index) => (
         <div key={index} className="gap-2 mb-5">
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">

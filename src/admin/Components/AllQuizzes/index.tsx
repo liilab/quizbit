@@ -10,6 +10,8 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 import QuizTableRow from "./QuizTableRow";
+import AddQuizWrapper from "../AddQuiz/AddQuizWrapper";
+import { redirect } from "react-router-dom";
 
 interface Column {
   id: "number" | "title" | "description" | "id" | "short_code";
@@ -53,6 +55,7 @@ export default function AllQuizzesFunction() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [refresh, setRefresh] = useState(false);
   const [rows, setRows] = useState<Data[]>([]);
+  const [editQuizId, setEditQuizId] = useState(""); // State to track the quiz ID being edited
   const home_url = (window as any).userLocalize.home_url;
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -66,12 +69,11 @@ export default function AllQuizzesFunction() {
     setPage(0);
   };
 
-
   React.useEffect(() => {
     axios
-      .get(home_url + "/wp-json/quizbit/v1/quiz/all-quzzes")
+      .get(home_url + "/wp-json/quizbit/v1/quiz/all-quizzes")
       .then((response) => {
-        const responseData = response.data; 
+        const responseData = response.data;
 
         if (Array.isArray(responseData.data)) {
           const rows = responseData.data.map((quiz: any, index: number) => {
@@ -104,6 +106,13 @@ export default function AllQuizzesFunction() {
                   {column.label}
                 </TableCell>
               ))}
+              <TableCell
+                key="actions"
+                align="right"
+                style={{ minWidth: 100, fontWeight: "bold" }}
+              >
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -116,6 +125,7 @@ export default function AllQuizzesFunction() {
                     row={row}
                     index={index}
                     setRefresh={setRefresh}
+                    setEditQuizId={setEditQuizId} // Pass the setEditQuizId function
                   />
                 );
               })}
@@ -131,6 +141,11 @@ export default function AllQuizzesFunction() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      {editQuizId && (
+        <div>
+          <AddQuizWrapper id={editQuizId} />
+        </div>
+      )}
     </Paper>
   );
 }

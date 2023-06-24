@@ -1,7 +1,7 @@
 import React from "react";
 import WpWrapper from "../Components/Layout/WpWrapper";
 import Navbar from "../Components/Navbar";
-import AddQuiz from "../Components/AddQuiz/AddQuiz";
+import AddQuizWrapper from "../components/AddQuiz/AddQuizWrapper";
 
 export default function AddNewQuiz() {
   const menus = [
@@ -14,7 +14,7 @@ export default function AddNewQuiz() {
   return (
     <WpWrapper>
       <Navbar menus={menus} border_color="blue" />
-      <AddQuiz />
+      <AddQuizWrapper />
     </WpWrapper>
   );
 }

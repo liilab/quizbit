@@ -27,12 +27,14 @@ interface QuizTableRowProps {
   row: any;
   index: any;
   setRefresh: any;
+  setEditQuizId: (id: string) => void; // New prop for setting the quiz ID to be edited
 }
 
 export default function QuizTableRow({
   row,
   index,
   setRefresh,
+  setEditQuizId,
 }: QuizTableRowProps) {
   const [hover, setHover] = useState(true);
   const [active, setActive] = useState(true);
@@ -54,10 +56,10 @@ export default function QuizTableRow({
             column={column}
             value={value}
             row_id={row.id}
-            hover={hover}
             setRefresh={setRefresh}
             active={active}
             setActive={setActive}
+            setEditQuizId={setEditQuizId} // Pass the setEditQuizId function
           />
         );
       })}
