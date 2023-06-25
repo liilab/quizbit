@@ -1,9 +1,9 @@
 import React from "react";
 import WpWrapper from "../Components/Layout/WpWrapper";
 import Navbar from "../Components/Navbar";
-import AllQuizzesContainer from "../Components/AllQuizzes";
+import AllQuestionsContainer from "../Components/AllQuestions";
 
-export default function AllQuizzes() {
+export default function AllQuestions() {
   const menus = [
     {
       name: "Add New Quiz",
@@ -14,7 +14,7 @@ export default function AllQuizzes() {
   return (
     <WpWrapper>
       <Navbar menus={menus} border_color="purple" />
-        <AllQuizzesContainer />
+        <AllQuestionsContainer />
     </WpWrapper>
   );
 }

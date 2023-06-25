@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import AllQuizzes from "./pages/all-quizzes";
+import AllQuestions from "./pages/all-quizzes";
 import AddNew from "./pages/add-new";
 
 import MenuRouter from "./routes/Router";
@@ -10,7 +10,7 @@ import "./admin.scss";
 const MenuLists = [
   {
     path: "all-quizzes",
-    element: <AllQuizzes />,
+    element: <AllQuestions />,
   },
   {
     path: "add-new",

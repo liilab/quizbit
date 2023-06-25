@@ -14,7 +14,7 @@ export default function AddNewQuiz() {
   return (
     <WpWrapper>
       <Navbar menus={menus} border_color="blue" />
-      <QuizFormWrapper id = "" />
+      <QuizFormWrapper id = "8" />
     </WpWrapper>
   );
 }

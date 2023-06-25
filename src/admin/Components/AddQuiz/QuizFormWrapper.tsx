@@ -14,9 +14,9 @@ export default function QuizFormWrapper({ id = "" }: QuizFormWrapperProps) {
     setTitle,
     description,
     setDescription,
-    newQuizzes,
+    newQuestions,
     handleSaveQuiz,
-    setNewQuizzes,
+    setNewQuestions,
     formSubmit,
   } = useQuizForm(id);
 
@@ -29,8 +29,8 @@ export default function QuizFormWrapper({ id = "" }: QuizFormWrapperProps) {
         setTitle={setTitle}
         description={description}
         setDescription={setDescription}
-        newQuizzes={newQuizzes}
-        setNewQuizzes={setNewQuizzes}
+        newQuestions={newQuestions}
+        setNewQuestions={setNewQuestions}
         handleSaveQuiz={handleSaveQuiz}
         handleQuizButtonText={id ? "Update Quiz" : "Save Quiz"}
         formSubmit={formSubmit}

@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "../../../Shared/Input";
-import NewQuiz from "./NewQuiz";
+import Question from "./Question";
 import Button from "../../../shared/Button";
 
 interface QuizFormProps {
@@ -10,14 +10,14 @@ interface QuizFormProps {
   setTitle: (title: string) => void;
   description: string;
   setDescription: (description: string) => void;
-  newQuizzes: any;
-  setNewQuizzes: (newQuizzes: any) => void;
+  newQuestions: any;
+  setNewQuestions: (newQuestions: any) => void;
   handleSaveQuiz: () => void;
   handleQuizButtonText: string;
   formSubmit: (e: any) => void;
 }
 
-export default function Form(props: QuizFormProps) {
+export default function QuizForm(props: QuizFormProps) {
   const {
     showDescription,
     setShowDescription,
@@ -25,8 +25,8 @@ export default function Form(props: QuizFormProps) {
     setTitle,
     description,
     setDescription,
-    newQuizzes,
-    setNewQuizzes,
+    newQuestions,
+    setNewQuestions,
     handleSaveQuiz,
     handleQuizButtonText,
     formSubmit,
@@ -68,7 +68,7 @@ export default function Form(props: QuizFormProps) {
                 </button>
               )}
             </div>
-            <NewQuiz newQuizzes={newQuizzes} setNewQuizzes={setNewQuizzes} />
+            <Question newQuestions={newQuestions} setNewQuestions={setNewQuestions} />
           </div>
         </div>
       </div>

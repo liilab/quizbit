@@ -10,7 +10,6 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 import QuizTableRow from "./QuizTableRow";
-import { redirect } from "react-router-dom";
 
 interface Column {
   id: "number" | "title" | "description" | "id" | "short_code";
@@ -49,7 +48,7 @@ function createData(
   return { number, id, title, description, short_code };
 }
 
-export default function AllQuizzesFunction() {
+export default function AllQuestionsFunction() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [refresh, setRefresh] = useState(false);
@@ -110,7 +109,6 @@ export default function AllQuizzesFunction() {
                 align="right"
                 style={{ minWidth: 100, fontWeight: "bold" }}
               >
-                Actions
               </TableCell>
             </TableRow>
           </TableHead>
@@ -140,11 +138,6 @@ export default function AllQuizzesFunction() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      {editQuizId && (
-        <div>
-          {/* <AddQuizWrapper id={editQuizId} /> */}
-        </div>
-      )}
     </Paper>
   );
 }

@@ -1,28 +1,24 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import useQuizSetting from "./useQuizSetting";
-import useOptionSetting from "./useOptionSetting";
 
 interface Option {
   value: string;
   isCorrect: boolean;
 }
 
-interface Quiz {
+interface Question{
   title: string;
   options: Option[];
 }
 
-export default function useQuizForm(id = "") {
+export default function useQuestionsForm(id = "") {
   const home_url = (window as any).userLocalize.home_url;
   const site_url = (window as any).userLocalize.site_url;
 
   const [showDescription, setShowDescription] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [newQuizzes, setNewQuizzes] = useState<Quiz[]>([
-    { title: "", options: [] },
-  ]);
+  const [newQuestions, setNewQuestions] = useState<Question[]>([]);
 
   if (id) {
     useEffect(() => {
@@ -32,11 +28,9 @@ export default function useQuizForm(id = "") {
             `${home_url}/wp-json/quizbit/v1/quiz/${id}`
           );
           const quiz = response.data.data;
-
           setTitle(quiz.title);
           setDescription(quiz.description);
-          setNewQuizzes(quiz.questions);
-          useQuizSetting({ newQuizzes, setNewQuizzes });
+          setNewQuestions(quiz.questions);
         } catch (error) {
           console.error(error);
         }
@@ -50,7 +44,7 @@ export default function useQuizForm(id = "") {
     const quizData = {
       title: title,
       description: description,
-      questions: newQuizzes,
+      questions: newQuestions,
     };
 
     console.log(quizData);
@@ -90,9 +84,9 @@ export default function useQuizForm(id = "") {
     setTitle,
     description,
     setDescription,
-    newQuizzes,
+    newQuestions,
     handleSaveQuiz,
-    setNewQuizzes,
+    setNewQuestions,
     formSubmit,
   };
 }

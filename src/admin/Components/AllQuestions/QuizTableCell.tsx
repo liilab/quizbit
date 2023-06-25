@@ -68,8 +68,6 @@ export default function QuizTableCell({
               const valueToCopy = String(value);
               navigator.clipboard.writeText(valueToCopy);
               setCopied(true);
-
-              // Reset the copied state after a delay
               setTimeout(() => {
                 setCopied(false);
               }, 5000);

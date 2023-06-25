@@ -27,7 +27,7 @@ interface QuizTableRowProps {
   row: any;
   index: any;
   setRefresh: any;
-  setEditQuizId: (id: string) => void; // New prop for setting the quiz ID to be edited
+  setEditQuizId: (id: string) => void;
 }
 
 export default function QuizTableRow({
@@ -59,7 +59,7 @@ export default function QuizTableRow({
             setRefresh={setRefresh}
             active={active}
             setActive={setActive}
-            setEditQuizId={setEditQuizId} // Pass the setEditQuizId function
+            setEditQuizId={setEditQuizId}
           />
         );
       })}

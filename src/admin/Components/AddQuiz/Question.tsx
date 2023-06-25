@@ -1,38 +1,38 @@
 import React, { useState } from "react";
 import Input from "../../../Shared/Input";
-import Options from "./Options";
+import Option from "./Option";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "../../../shared/Button";
-import useQuizSetting  from "../../hooks/useQuizSetting";
+import useQuestionSetting  from "../../hooks/useQuestionsSetting";
 
 interface Option {
   value: string;
   isCorrect: boolean;
 }
 
-interface Quiz {
+interface Question{
   title: string;
   options: Option[];
 }
 
-interface NewQuizProps {
-  newQuizzes: Quiz[];
-  setNewQuizzes: (newQuizzes: Quiz[]) => void;
+interface NewQuestionProps {
+  newQuestions: Question[];
+  setNewQuestions: (newQuestions: Question[]) => void;
 }
 
-export default function NewQuiz({ newQuizzes, setNewQuizzes }: NewQuizProps) {
+export default function Question({ newQuestions, setNewQuestions }: NewQuestionProps) {
 
  const {
-    allQuizzes,
+    allQuestions,
     handleAddQuiz,
     handleInputChange,
     handleDeleteInput,
     handleUpdateOptions,
-  } = useQuizSetting({ newQuizzes, setNewQuizzes });
+  } = useQuestionSetting({ newQuestions, setNewQuestions });
 
   return (
     <>
-      {allQuizzes.map((quiz, index) => (
+      {allQuestions.map((quiz, index) => (
         <div key={index} className="gap-2 mb-5">
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
@@ -54,7 +54,7 @@ export default function NewQuiz({ newQuizzes, setNewQuizzes }: NewQuizProps) {
               }
             />
           </div>
-          <Options
+          <Option
             options={quiz.options}
             setOptions={(options: Option[]) =>
               handleUpdateOptions(index, options)

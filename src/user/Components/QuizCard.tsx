@@ -17,7 +17,7 @@ interface Questions {
   options: Option[];
 }
 
-interface Quiz {
+interface Question{
   title: string;
   description: string;
   questions: Questions[];
