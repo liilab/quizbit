@@ -20,9 +20,8 @@ export default function useQuestionSetting({
   newQuestions,
   setNewQuestions,
 }: NewQuizProps) {
-  const [allQuestions, setAllQuestions] = useState<Question[]>([
-    { title: "", options: [] },
-  ]);
+
+  const [allQuestions, setAllQuestions] = useState<Question[]>([...newQuestions]);
 
   const handleAddQuiz = () => {
     setAllQuestions([...allQuestions, { title: "", options: [] }]);
@@ -54,7 +53,6 @@ export default function useQuestionSetting({
   }, [allQuestions, setNewQuestions]);
 
   return {
-    setAllQuestions,
     handleAddQuiz,
     handleInputChange,
     handleDeleteInput,

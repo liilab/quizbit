@@ -15,14 +15,14 @@ interface OptionsProps {
   setOptions: (options: Option[]) => void;
 }
 
-export default function Options(props: OptionsProps) {
+export default function Options({ options, setOptions }: OptionsProps) {
   const {
     inputAreas,
     handleAddInput,
     handleInputChange,
     handleCheckboxChange,
     handleDeleteInput,
-  } = useOptionSetting( { options: props.options, setOptions: props.setOptions });
+  } = useOptionSetting({ options, setOptions });
 
   return (
     <div>
