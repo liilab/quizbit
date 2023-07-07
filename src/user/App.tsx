@@ -1,12 +1,12 @@
 import React from "react";
-import QuizCard from "./Components/QuizCard";
+import QuizCardWrapper from "./Components/QuizCardWrapper";
 
 export default function App(props: any) {
   const { id } = props;
 
   return (
     <>
-      <QuizCard id={id} />
+      <QuizCardWrapper id={id} />
     </>
   );
 }

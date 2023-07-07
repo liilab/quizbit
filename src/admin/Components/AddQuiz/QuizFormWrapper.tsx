@@ -19,6 +19,7 @@ export default function QuizFormWrapper({ id = "" }: QuizFormWrapperProps) {
     setNewQuestions,
     formSubmit,
   } = useQuizForm(id);
+  
 
   return (
     <>

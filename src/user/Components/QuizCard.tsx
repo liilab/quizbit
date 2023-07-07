@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import Options from "./Options";
 import { FaChevronCircleLeft } from "react-icons/fa";
 
@@ -10,62 +9,47 @@ interface Option {
   isCorrect: string;
 }
 
-interface Questions {
+interface Question {
   id: number;
   quiz_id: number;
   title: string;
   options: Option[];
 }
 
-interface Question{
+interface Quiz{
   title: string;
   description: string;
-  questions: Questions[];
+  questions: Question[];
 }
 
-export default function QuizCard(id: any) {
-  const [quizData, setQuizData] = useState<Quiz>();
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedQuizzes, setSelectedQuizzes] = useState<number[]>([]);
-  const [scores, setScores] = useState(0);
-  const [showResults, setShowResults] = useState(false);
+  
+interface QuizCardProps {
+  quizData: Quiz | undefined;
+  currentQuestionIndex: number;
+  selectedQuizzes: number[];
+  scores: number;
+  showResults: boolean;
+  quizLength: number;
+  handleQuizSelect: (quizId: number) => void;
+  isQuizSelected: (quizId: number) => boolean;
+  handleNextQuestion: (plus: boolean) => void;
+  setShowResults: (show: boolean) => void;
+  setScores: (scores: number) => void;
+}
 
-  const quizId = id.id;
-  const home_url = (window as any).userLocalize.home_url;
-
-  const handleQuizSelect = (quizId: number) => {
-    setSelectedQuizzes((prevSelectedQuizzes) => [...prevSelectedQuizzes, quizId]);
-  };
-
-  const isQuizSelected = (quizId: number) => {
-    return selectedQuizzes.includes(quizId);
-  };
-
-  useEffect(() => {
-    axios
-      .get(home_url + `/wp-json/quizbit/v1/quiz/${quizId}`)
-      .then((response) => {
-        setQuizData(response.data.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  const quizLength = quizData?.questions.length || 0;
-
-  const handleNextQuestion = (plus: boolean) => {
-    if (
-      plus &&
-      quizData &&
-      quizData.questions &&
-      currentQuestionIndex < quizData.questions.length - 1
-    ) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else if (!plus && currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
-  };
+export default function QuizCard({
+  quizData,
+  currentQuestionIndex,
+  selectedQuizzes,
+  scores,
+  showResults,
+  quizLength,
+  handleQuizSelect,
+  isQuizSelected,
+  handleNextQuestion,
+  setShowResults,
+  setScores,
+} : QuizCardProps){
 
   return (
     <div>

@@ -22,7 +22,7 @@ export default function Options(props: OptionsProps) {
     handleInputChange,
     handleCheckboxChange,
     handleDeleteInput,
-  } = useOptionSetting(props);
+  } = useOptionSetting( { options: props.options, setOptions: props.setOptions });
 
   return (
     <div>

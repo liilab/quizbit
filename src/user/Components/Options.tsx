@@ -28,31 +28,6 @@ export default function Options({ options, selectedAny, handleQuizSelect, quizId
     return selectedOptions.includes(optionId);
   };
 
-  // useEffect(() => {
-  //   const storedState = localStorage.getItem("optionsState");
-  //   if (storedState) {
-  //     const parsedState = JSON.parse(storedState);
-  //     setSelectedOptions(parsedState.selectedOptions || []);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const stateToStore = {
-  //     selectedOptions,
-  //   };
-  //   localStorage.setItem("optionsState", JSON.stringify(stateToStore));
-  // }, [selectedOptions]);
-
-  // useEffect(() => {
-  //   const expirationTimer = setTimeout(() => {
-  //     localStorage.removeItem("optionsState");
-  //   }, 100); // 5 minutes in milliseconds
-
-  //   return () => {
-  //     clearTimeout(expirationTimer);
-  //   };
-  // }, []);
-
   return (
     <>
       {options.map((option) => (

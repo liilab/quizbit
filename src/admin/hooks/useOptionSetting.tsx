@@ -11,11 +11,8 @@ interface OptionsProps {
   setOptions: (options: Option[]) => void;
 }
 
-export default function useOptionSetting({ setOptions }: OptionsProps) {
-  const [inputAreas, setInputAreas] = useState<Option[]>([
-    { value: "", isCorrect: false },
-    { value: "", isCorrect: false },
-  ]);
+export default function useOptionSetting({ options, setOptions }: OptionsProps) {
+  const [inputAreas, setInputAreas] = useState<Option[]>([...options]);
 
   const handleAddInput = () => {
     setInputAreas([...inputAreas, { value: "", isCorrect: false }]);

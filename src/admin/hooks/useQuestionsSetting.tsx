@@ -6,7 +6,7 @@ interface Option {
   isCorrect: boolean;
 }
 
-interface Question{
+interface Question {
   title: string;
   options: Option[];
 }
@@ -20,10 +20,9 @@ export default function useQuestionSetting({
   newQuestions,
   setNewQuestions,
 }: NewQuizProps) {
-
   const [allQuestions, setAllQuestions] = useState<Question[]>([
     { title: "", options: [] },
-]);
+  ]);
 
   const handleAddQuiz = () => {
     setAllQuestions([...allQuestions, { title: "", options: [] }]);
@@ -31,7 +30,10 @@ export default function useQuestionSetting({
 
   const handleInputChange = (index: number, field: string, value: string) => {
     const updatedAllQuestions = [...allQuestions];
-    updatedAllQuestions[index] = { ...updatedAllQuestions[index], [field]: value };
+    updatedAllQuestions[index] = {
+      ...updatedAllQuestions[index],
+      [field]: value,
+    };
     setAllQuestions(updatedAllQuestions);
   };
 
@@ -51,9 +53,7 @@ export default function useQuestionSetting({
     setNewQuestions(allQuestions);
   }, [allQuestions, setNewQuestions]);
 
-
   return {
-    allQuestions,
     setAllQuestions,
     handleAddQuiz,
     handleInputChange,

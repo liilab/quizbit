@@ -32,6 +32,8 @@ export default function QuizForm(props: QuizFormProps) {
     formSubmit,
   } = props;
 
+  
+
   return (
     <form onSubmit={(e) => formSubmit(e)}>
       <div>

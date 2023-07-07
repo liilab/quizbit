@@ -23,7 +23,6 @@ interface NewQuestionProps {
 export default function Question({ newQuestions, setNewQuestions }: NewQuestionProps) {
 
  const {
-    allQuestions,
     handleAddQuiz,
     handleInputChange,
     handleDeleteInput,
@@ -32,7 +31,7 @@ export default function Question({ newQuestions, setNewQuestions }: NewQuestionP
 
   return (
     <>
-      {allQuestions.map((quiz, index) => (
+      {newQuestions.map((quiz, index) => (
         <div key={index} className="gap-2 mb-5">
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
