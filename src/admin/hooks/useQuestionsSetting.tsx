@@ -20,10 +20,12 @@ export default function useQuestionSetting({
   newQuestions,
   setNewQuestions,
 }: NewQuizProps) {
-
-  const [allQuestions, setAllQuestions] = useState<Question[]>([...newQuestions]);
+  const [allQuestions, setAllQuestions] = useState<Question[]>([
+    ...newQuestions,
+  ]);
 
   const handleAddQuiz = () => {
+    console.log("handleAddQuiz");
     setAllQuestions([...allQuestions, { title: "", options: [] }]);
   };
 
@@ -44,13 +46,17 @@ export default function useQuestionSetting({
 
   const handleUpdateOptions = (index: number, options: Option[]) => {
     const updatedAllQuestions = [...allQuestions];
-    updatedAllQuestions[index].options = options;
+    if (updatedAllQuestions && updatedAllQuestions[index]) {
+      updatedAllQuestions[index].options = options;
+    } else {
+      console.error("Invalid index or undefined array.");
+    }
     setAllQuestions(updatedAllQuestions);
   };
 
   useEffect(() => {
     setNewQuestions(allQuestions);
-  }, [allQuestions, setNewQuestions]);
+  }, [allQuestions]);
 
   return {
     handleAddQuiz,

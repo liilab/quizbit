@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TableCell from "@mui/material/TableCell";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface Column {
   id: "number" | "title" | "description" | "id" | "short_code";
@@ -92,13 +93,8 @@ export default function QuizTableCell({
                   : "mt-3 flex flex-row gap-3 items"
               }
             >
-              <button
-                className="text-blue-400 text-[0.85rem]"
-                onClick={() => {
-                  editQuiz(row_id);
-                }}
-              >
-                Edit
+              <button className="text-blue-400 text-[0.85rem]">
+                <Link to={`/add-new?id=${row_id}`}>Edit</Link>
               </button>
               |
               <button

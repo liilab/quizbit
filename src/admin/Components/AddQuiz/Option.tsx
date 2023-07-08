@@ -15,6 +15,10 @@ interface OptionsProps {
   setOptions: (options: Option[]) => void;
 }
 
+function isCorrect(value: string | boolean): boolean {
+  return value === "1" || value === true;
+}
+
 export default function Options({ options, setOptions }: OptionsProps) {
   const {
     inputAreas,
@@ -30,14 +34,14 @@ export default function Options({ options, setOptions }: OptionsProps) {
         <div className="flex mt-5" key={index}>
           <Input
             type="text"
-            borderActive={input.isCorrect}
+            borderActive={isCorrect(input.isCorrect)}
             placeholder={`eg: Option ${index + 1}`}
             value={input.value}
             onChange={(e) => handleInputChange(index, e.target.value)}
           />
           <div className="flex gap-1 w-1/12 items-center">
             <CheckBox
-              checked={input.isCorrect}
+              checked={isCorrect(input.isCorrect)}
               onChange={() => handleCheckboxChange(index)}
             />
             <CancelIcon

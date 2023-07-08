@@ -6,7 +6,7 @@ interface Option {
   isCorrect: boolean;
 }
 
-interface Question{
+interface Question {
   title: string;
   options: Option[];
 }
@@ -47,12 +47,11 @@ export default function useQuestionsForm(id = "") {
       questions: newQuestions,
     };
 
-    console.log(quizData);
 
-    if (id == "") {
+    if (id) {
       console.log(quizData);
       axios
-        .post(home_url + "/wp-json/quizbit/v1/quiz", quizData)
+        .put(home_url + `/wp-json/quizbit/v1/quiz/update/${id}`, quizData)
         .then(() => {
           window.location.href =
             site_url + "/wp-admin/admin.php?page=quizbit#/all-quizzes";
@@ -62,7 +61,7 @@ export default function useQuestionsForm(id = "") {
         });
     } else {
       axios
-        .put(home_url + `/wp-json/quizbit/v1/quiz/update/${id}`, quizData)
+        .post(home_url + "/wp-json/quizbit/v1/quiz", quizData)
         .then(() => {
           window.location.href =
             site_url + "/wp-admin/admin.php?page=quizbit#/all-quizzes";

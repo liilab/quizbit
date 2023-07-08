@@ -55,9 +55,7 @@ export default function Question({ newQuestions, setNewQuestions }: NewQuestionP
           </div>
           <Option
             options={quiz.options}
-            setOptions={(options: Option[]) =>
-              handleUpdateOptions(index, options)
-            }
+            setOptions={(options) => handleUpdateOptions(index, options)}
           />
         </div>
       ))}
