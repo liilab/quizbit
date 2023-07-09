@@ -20,43 +20,44 @@ export default function useQuestionSetting({
   newQuestions,
   setNewQuestions,
 }: NewQuizProps) {
-  const [allQuestions, setAllQuestions] = useState<Question[]>([
-    ...newQuestions,
-  ]);
-
   const handleAddQuiz = () => {
     console.log("handleAddQuiz");
-    setAllQuestions([...allQuestions, { title: "", options: [] }]);
+    setNewQuestions([
+      ...newQuestions,
+      {
+        title: "",
+        options: [
+          { value: "", isCorrect: false },
+          { value: "", isCorrect: false },
+        ],
+      },
+    ]);
   };
 
   const handleInputChange = (index: number, field: string, value: string) => {
-    const updatedAllQuestions = [...allQuestions];
+    const updatedAllQuestions = [...newQuestions];
     updatedAllQuestions[index] = {
       ...updatedAllQuestions[index],
       [field]: value,
     };
-    setAllQuestions(updatedAllQuestions);
+    setNewQuestions(updatedAllQuestions);
   };
 
   const handleDeleteInput = (index: number) => {
-    const updatedAllQuestions = [...allQuestions];
+    const updatedAllQuestions = [...newQuestions];
     updatedAllQuestions.splice(index, 1);
-    setAllQuestions(updatedAllQuestions);
+    setNewQuestions(updatedAllQuestions);
   };
 
   const handleUpdateOptions = (index: number, options: Option[]) => {
-    const updatedAllQuestions = [...allQuestions];
+    const updatedAllQuestions = [...newQuestions];
     if (updatedAllQuestions && updatedAllQuestions[index]) {
       updatedAllQuestions[index].options = options;
     } else {
       console.error("Invalid index or undefined array.");
     }
-    setAllQuestions(updatedAllQuestions);
+    setNewQuestions(updatedAllQuestions);
   };
-
-  useEffect(() => {
-    setNewQuestions(allQuestions);
-  }, [allQuestions]);
 
   return {
     handleAddQuiz,
