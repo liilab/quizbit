@@ -8,6 +8,7 @@ interface Option {
 }
 
 interface OptionsBoxProps {
+  optionId: number;
   option: Option;
   selected: boolean;
   onSelect: (optionId: number) => void;
@@ -19,6 +20,7 @@ interface OptionsBoxProps {
 }
 
 export default function OptionsBox({
+  optionId,
   option,
   selected,
   onSelect,
@@ -30,7 +32,7 @@ export default function OptionsBox({
 }: OptionsBoxProps) {
   const handleSelect = () => {
     if (!selected) {
-      onSelect(option.id);
+      onSelect(optionId);
       if (option.isCorrect === "1") {
         handleScores(scores + 1);
       }

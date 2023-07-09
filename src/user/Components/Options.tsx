@@ -17,11 +17,21 @@ interface OptionsProps {
   handleScores: (scores: number) => void;
 }
 
-export default function Options({ options, selectedAny, handleQuizSelect, quizId, handleScores, scores }: OptionsProps) {
+export default function Options({
+  options,
+  selectedAny,
+  handleQuizSelect,
+  quizId,
+  handleScores,
+  scores,
+}: OptionsProps) {
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
   const handleSelect = (optionId: number) => {
-    setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionId]);
+    setSelectedOptions((prevSelectedOptions) => [
+      ...prevSelectedOptions,
+      optionId,
+    ]);
   };
 
   const isOptionSelected = (optionId: number) => {
@@ -30,11 +40,12 @@ export default function Options({ options, selectedAny, handleQuizSelect, quizId
 
   return (
     <>
-      {options.map((option) => (
-        <div className="flex items-center gap-3" key={option.id}>
+      {options.map((option, index) => (
+        <div className="flex items-center gap-3" key={index}>
           <OptionsBox
+            optionId={index}
             option={option}
-            selected={isOptionSelected(option.id)}
+            selected={isOptionSelected(index)}
             onSelect={handleSelect}
             selectedAny={selectedAny}
             handleQuizSelect={handleQuizSelect}
