@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Options from "./Options";
 import { FaChevronCircleLeft } from "react-icons/fa";
 
@@ -9,47 +10,62 @@ interface Option {
   isCorrect: string;
 }
 
-interface Question {
+interface Questions {
   id: number;
   quiz_id: number;
   title: string;
   options: Option[];
 }
 
-interface Quiz{
+interface Quiz {
   title: string;
   description: string;
-  questions: Question[];
+  questions: Questions[];
 }
 
-  
-interface QuizCardProps {
-  quizData: Quiz | undefined;
-  currentQuestionIndex: number;
-  selectedQuizzes: number[];
-  scores: number;
-  showResults: boolean;
-  quizLength: number;
-  handleQuizSelect: (quizId: number) => void;
-  isQuizSelected: (quizId: number) => boolean;
-  handleNextQuestion: (plus: boolean) => void;
-  setShowResults: (show: boolean) => void;
-  setScores: (scores: number) => void;
-}
+export default function QuizCard(id: any) {
+  const [quizData, setQuizData] = useState<Quiz>();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedQuizes, setSelectedQuizes] = useState<number[]>([]);
+  const [scores, setScores] = useState(0);
+  const [showResults, setShowResults] = useState(false);
 
-export default function QuizCard({
-  quizData,
-  currentQuestionIndex,
-  selectedQuizzes,
-  scores,
-  showResults,
-  quizLength,
-  handleQuizSelect,
-  isQuizSelected,
-  handleNextQuestion,
-  setShowResults,
-  setScores,
-} : QuizCardProps){
+  const quizId = id.id;
+  const home_url = (window as any).userLocalize.home_url;
+
+  const handleQuizSelect = (quizId: number) => {
+    setSelectedQuizes((prevSelectedQuizes) => [...prevSelectedQuizes, quizId]);
+  };
+
+  const isQuizSelected = (quizId: number) => {
+    return selectedQuizes.includes(quizId);
+  };
+
+  useEffect(() => {
+    axios
+      .get(home_url + `/wp-json/quizbit/v1/quiz/${quizId}`)
+      .then((response) => {
+        setQuizData(response.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const quizLength = quizData?.questions.length || 0;
+
+  const handleNextQuestion = (plus: boolean) => {
+    if (
+      plus &&
+      quizData &&
+      quizData.questions &&
+      currentQuestionIndex < quizData.questions.length - 1
+    ) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else if (!plus && currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
 
   return (
     <div>
@@ -66,7 +82,7 @@ export default function QuizCard({
               </h5>
               <div>
                 <div className="flex items-start">
-                  <h2 className="font-bold text-primary-500">
+                  <h2 className="font-bold text-[#6E6E6E]">
                     Question {currentQuestionIndex + 1}
                   </h2>
                   <button
@@ -117,10 +133,10 @@ export default function QuizCard({
                         Correct - {scores}
                       </li>
                       <li className="text-[#EF4444] text-2xl font-medium list-outside list-disc ml-6">
-                        Wrong - {selectedQuizzes.length - scores}
+                        Wrong - {selectedQuizes.length - scores}
                       </li>
                       <li className="text-[#6B7280] text-2xl font-medium list-outside list-disc ml-6">
-                        Skippped - {quizLength - selectedQuizzes.length}
+                        Skippped - {quizLength - selectedQuizes.length}
                       </li>
                     </ul>
                   </div>

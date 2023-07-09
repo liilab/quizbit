@@ -15,7 +15,7 @@ interface OptionsBoxProps {
   handleQuizSelect: (quizId: number) => void;
   quizId: number;
   scores: number;
-  handleScores : (scores: number) => void;
+  handleScores: (scores: number) => void;
 }
 
 export default function OptionsBox({
@@ -26,10 +26,8 @@ export default function OptionsBox({
   quizId,
   handleQuizSelect,
   scores,
-  handleScores
+  handleScores,
 }: OptionsBoxProps) {
-
-
   const handleSelect = () => {
     if (!selected) {
       onSelect(option.id);
