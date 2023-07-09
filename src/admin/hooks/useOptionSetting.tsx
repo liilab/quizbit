@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useEffect, useState} from "react";
 
 interface Option {
   value: string;
@@ -11,7 +11,11 @@ interface OptionsProps {
 }
 
 export default function useOptionSetting({ options, setOptions }: OptionsProps) {
-  const [inputAreas, setInputAreas] = useState<Option[]>([...options]);
+  const [inputAreas, setInputAreas] = useState<Option[]>([]);
+
+  useEffect(() => {
+    setInputAreas([...options]);
+  }, [options]);
 
   const handleAddInput = () => {
     setInputAreas([...inputAreas, { value: "", isCorrect: false }]);

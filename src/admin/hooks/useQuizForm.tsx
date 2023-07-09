@@ -18,15 +18,7 @@ export default function useQuestionsForm(id = "") {
   const [showDescription, setShowDescription] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [newQuestions, setNewQuestions] = useState<Question[]>([
-    {
-      title: "",
-      options: [
-        { value: "", isCorrect: false },
-        { value: "", isCorrect: false },
-      ],
-    },
-  ]);
+  const [newQuestions, setNewQuestions] = useState<Question[]>([]);
 
   if (id) {
     useEffect(() => {
@@ -45,6 +37,21 @@ export default function useQuestionsForm(id = "") {
       };
 
       fetchData();
+    }, [id]);
+  }
+  else{
+    useEffect(() => {
+      setTitle("");
+      setDescription("");
+      setNewQuestions([
+        {
+          title: "",
+          options: [
+            { value: "", isCorrect: false },
+            { value: "", isCorrect: false },
+          ],
+        },
+      ]);
     }, [id]);
   }
 
