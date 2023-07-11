@@ -42,11 +42,15 @@ export default function OptionsBox({
     }
   };
 
-  const borderColor = selectedAny
-    ? option.isCorrect === "1"
-      ? "green"
-      : "red"
-    : "gray";
+if (selectedAny && option.isCorrect === "1") {
+  var borderColor = "green";
+} else if (selected && option.isCorrect === "0"){
+  var borderColor = "red";
+}
+else{
+  var borderColor = "gray";
+}
+
 
   return (
     <>
