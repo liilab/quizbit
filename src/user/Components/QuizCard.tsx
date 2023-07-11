@@ -67,6 +67,23 @@ export default function QuizCard(id: any) {
     }
   };
 
+  const greetingsWords = ["Very Bad!", "Bad!", "Good!", "Very Good!", "Excellent!"];
+
+  const getGreetings = (score: number) => {
+    score = Math.round(score * 100/quizLength);
+    if (score <= 20) {
+      return greetingsWords[0];
+    } else if (score > 20 && score <= 40) {
+      return greetingsWords[1];
+    } else if (score > 40 && score <= 60) {
+      return greetingsWords[2];
+    } else if (score > 60 && score <= 80) {
+      return greetingsWords[3];
+    } else if (score > 80 && score <= 100) {
+      return greetingsWords[4];
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-center">
@@ -115,7 +132,9 @@ export default function QuizCard(id: any) {
             </>
           ) : (
             <>
-              <h1 className="text-5xl text-bold text-center">Well Done!</h1>
+              <h1 className="text-5xl text-bold text-center">
+                {getGreetings(scores)}
+              </h1>
               <div className="mt-20 mb-10">
                 <h1 className="text-2xl font-semibold my-4">Your Scores</h1>
                 <div className="flex justify-between">
