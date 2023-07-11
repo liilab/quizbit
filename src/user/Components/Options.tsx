@@ -25,18 +25,20 @@ export default function Options({
   handleScores,
   scores,
 }: OptionsProps) {
-  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: number[] }>({});
 
   const handleSelect = (optionId: number) => {
-    setSelectedOptions((prevSelectedOptions) => [
+    setSelectedOptions((prevSelectedOptions) => ({
       ...prevSelectedOptions,
-      optionId,
-    ]);
+      [quizId]: [...(prevSelectedOptions[quizId] || []), optionId],
+    }));
   };
-
+  
   const isOptionSelected = (optionId: number) => {
-    return selectedOptions.includes(optionId);
+    return selectedOptions[quizId]?.includes(optionId) || false;
   };
+  
+
 
   return (
     <>
