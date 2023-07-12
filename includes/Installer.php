@@ -51,10 +51,12 @@ class Installer
         }
 
         $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}quizbit_quizzes` (
-          `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-          `title` VARCHAR(255) NOT NULL,
-          `description` TEXT
+            `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `title` VARCHAR(255) NOT NULL,
+            `description` TEXT,
+            `isactive` TINYINT(1) NOT NULL DEFAULT 1
         ) $charset_collate";
+
 
         dbDelta($schema);
 

@@ -21,7 +21,6 @@ export default function useQuestionSetting({
   setNewQuestions,
 }: NewQuizProps) {
   const handleAddQuiz = () => {
-    console.log("handleAddQuiz");
     setNewQuestions([
       ...newQuestions,
       {

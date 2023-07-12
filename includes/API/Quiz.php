@@ -134,7 +134,104 @@ class Quiz extends RestController
                 ),
             )
         );
+
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/updatestatus/(?P<id>\d+)',
+            array(
+                'methods'             => WP_REST_Server::EDITABLE,
+                'callback'            => array($this, 'setstatus_quiz'),
+                'permission_callback' => array($this, 'get_permissions'),
+                'args'                => array(
+                    'id' => array(
+                        'description' => __('Unique identifier for the object.'),
+                        'type'        => 'integer',
+                    ),
+                ),
+                'schema'              => array($this, 'get_item_schema'),
+            )
+        );
+
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/getstatus/(?P<id>\d+)',
+            array(
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => array($this, 'checkstatus_quiz'),
+                'permission_callback' => array($this, 'get_permissions'),
+                'args'                => array(
+                    'id' => array(
+                        'description' => __('Unique identifier for the object.'),
+                        'type'        => 'integer',
+                    ),
+                ),
+                'schema'              => array($this, 'get_item_schema'),
+            )
+        );
     }
+
+    public function checkstatus_quiz($request)
+    {
+        $quizId = $request->get_param('id');
+
+        global $wpdb;
+
+        // Get the isActive status from the database
+        $isActive = $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT isactive FROM {$wpdb->prefix}quizbit_quizzes WHERE id = %d",
+                $quizId
+            )
+        );
+
+        if ($isActive === null) {
+            return new \WP_Error(
+                'not_found',
+                __('Quiz not found.'),
+                array('status' => 404)
+            );
+        }
+
+        return array('isactive' => $isActive);
+    }
+
+
+    public function setstatus_quiz($request)
+    {
+        $quizId = $request->get_param('id');
+        $data = $request->get_json_params();
+    
+        if (!isset($data['isactive'])) {
+            return new \WP_Error(
+                'missing_data',
+                __('Missing isactive field in the request body.'),
+                array('status' => 400)
+            );
+        }
+    
+        $isactive = $data['isactive'];
+    
+        global $wpdb;
+    
+        // Update the isactive status in the database
+        $result = $wpdb->update(
+            "{$wpdb->prefix}quizbit_quizzes",
+            array('isactive' => $isactive),
+            array('id' => $quizId)
+        );
+    
+        if ($result === false) {
+            return new \WP_Error(
+                'update_failed',
+                __('Failed to update the quiz status.'),
+                array('status' => 500)
+            );
+        }
+    
+        return array('success' => true);
+    }
+    
+
 
 
     public function delete_quiz($request)

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableCell from "@mui/material/TableCell";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -48,6 +48,34 @@ export default function QuizTableCell({
 
   function editQuiz(id: string) {
     setEditQuizId(id); // Update the state with the quiz ID to be edited
+  }
+
+  useEffect(() => {
+    axios
+      .get(home_url + `/wp-json/quizbit/v1/quiz/getstatus/${row_id}`)
+      .then((response) => {
+        setTimeout(() => {
+          if (response.data.isactive == 1) setActive(true);
+          else setActive(false);
+        }, 1000);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [active, row_id]);
+
+  function updateStatus(id: string, status: boolean) {
+    axios
+      .put(home_url + `/wp-json/quizbit/v1/quiz/updatestatus/${id}`, {
+        isactive: status,
+      })
+      .then((response) => {
+        console.log(response);
+        setRefresh(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   return (
@@ -114,6 +142,7 @@ export default function QuizTableCell({
                   checked={active}
                   onChange={() => {
                     setActive(!active);
+                    updateStatus(row_id, !active);
                   }}
                 />
                 <div className="w-10 h-5 bg-gray-300 rounded-full  peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#864DB6]"></div>
