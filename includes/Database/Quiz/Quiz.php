@@ -112,9 +112,12 @@ class Quiz
         return $quizzes;
     }
 
-    public function get_quiz_data($quizId)
+    public function get_quiz_data($data)
     {
         global $wpdb;
+
+        $quizId = $data['id'];
+        $source = $data['source'];
 
         // Check if the quiz is active
         $isActive = $wpdb->get_var(
@@ -125,6 +128,10 @@ class Quiz
         );
 
         $isActive = ($isActive == 1) ? true : false;
+        
+        if($source == '1'){
+            $isActive = true;
+        }
 
 
         // Fetch quiz data only if it is active

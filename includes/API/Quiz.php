@@ -97,7 +97,7 @@ class Quiz extends RestController
 
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base . '/(?P<id>\d+)',
+            '/' . $this->rest_base . '/(?P<source>[01])/id/(?P<id>\d+)',
             array(
                 array(
                     'methods'             => WP_REST_Server::READABLE,
@@ -200,7 +200,7 @@ class Quiz extends RestController
     {
         $quizId = $request->get_param('id');
         $data = $request->get_json_params();
-    
+
         if (!isset($data['isactive'])) {
             return new \WP_Error(
                 'missing_data',
@@ -208,18 +208,18 @@ class Quiz extends RestController
                 array('status' => 400)
             );
         }
-    
+
         $isactive = $data['isactive'];
-    
+
         global $wpdb;
-    
+
         // Update the isactive status in the database
         $result = $wpdb->update(
             "{$wpdb->prefix}quizbit_quizzes",
             array('isactive' => $isactive),
             array('id' => $quizId)
         );
-    
+
         if ($result === false) {
             return new \WP_Error(
                 'update_failed',
@@ -227,10 +227,10 @@ class Quiz extends RestController
                 array('status' => 500)
             );
         }
-    
+
         return array('success' => true);
     }
-    
+
 
 
 
@@ -290,7 +290,7 @@ class Quiz extends RestController
 
         $quiz = $this->quizDB;
 
-        $response = $quiz->get_quiz_data($params['id']);
+        $response = $quiz->get_quiz_data($params);
 
         $data = array(
             'status' => 'success',

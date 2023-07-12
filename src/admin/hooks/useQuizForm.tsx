@@ -25,7 +25,7 @@ export default function useQuestionsForm(id = "") {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${home_url}/wp-json/quizbit/v1/quiz/${id}`
+            `${home_url}/wp-json/quizbit/v1/quiz/1/id/${id}`
           );
           const quiz = response.data.data;
           setTitle(quiz.title);

@@ -44,7 +44,7 @@ export default function QuizCard(id: any) {
 
   useEffect(() => {
     axios
-      .get(home_url + `/wp-json/quizbit/v1/quiz/${quizId}`)
+      .get(home_url + `/wp-json/quizbit/v1/quiz/0/id/${quizId}`)
       .then((response) => {
         setQuizData(response.data.data);
       })
