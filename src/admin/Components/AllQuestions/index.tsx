@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -53,7 +53,6 @@ export default function AllQuestionsFunction() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [refresh, setRefresh] = useState(false);
   const [rows, setRows] = useState<Data[]>([]);
-  const [editQuizId, setEditQuizId] = useState(""); // State to track the quiz ID being edited
   const home_url = (window as any).userLocalize.home_url;
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -67,7 +66,7 @@ export default function AllQuestionsFunction() {
     setPage(0);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios
       .get(home_url + "/wp-json/quizbit/v1/quiz/all-quizzes")
       .then((response) => {
@@ -121,8 +120,8 @@ export default function AllQuestionsFunction() {
                     key={index}
                     row={row}
                     index={index}
+                    refresh={refresh}
                     setRefresh={setRefresh}
-                    setEditQuizId={setEditQuizId} // Pass the setEditQuizId function
                   />
                 );
               })}

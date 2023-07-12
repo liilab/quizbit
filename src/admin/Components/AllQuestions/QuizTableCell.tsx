@@ -15,20 +15,20 @@ interface QuizTableCell {
   column: Column;
   value: any;
   row_id?: any;
+  refresh?: any;
   setRefresh?: any;
   active: boolean;
   setActive?: any;
-  setEditQuizId: (id: string) => void;
 }
 
 export default function QuizTableCell({
   column,
   value,
   row_id,
+  refresh,
   setRefresh,
   active,
   setActive,
-  setEditQuizId,
 }: QuizTableCell) {
   const [copied, setCopied] = useState(false);
 
@@ -38,16 +38,11 @@ export default function QuizTableCell({
     axios
       .delete(home_url + `/wp-json/quizbit/v1/quiz/delete/${id}`)
       .then((response) => {
-        console.log(response);
-        setRefresh(true);
+        setRefresh(!refresh);
       })
       .catch((error) => {
         console.error(error);
       });
-  }
-
-  function editQuiz(id: string) {
-    setEditQuizId(id); // Update the state with the quiz ID to be edited
   }
 
   useEffect(() => {

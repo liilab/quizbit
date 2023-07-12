@@ -1,4 +1,6 @@
 import React from "react";
+import Checkbox from "@mui/material/Checkbox";
+import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 
 interface Option {
   id: number;
@@ -42,32 +44,55 @@ export default function OptionsBox({
     }
   };
 
-if (selectedAny && option.isCorrect === "1") {
-  var borderColor = "green";
-} else if (selected && option.isCorrect === "0"){
-  var borderColor = "red";
-}
-else{
-  var borderColor = "gray";
-}
-
+  let borderColor = "gray",
+    checkboxColor = "";
+  if (selectedAny && option.isCorrect === "1") {
+    borderColor = "green";
+    checkboxColor = "success";
+  } else if (selected && option.isCorrect === "0") {
+    borderColor = "red";
+    checkboxColor = "error";
+  }
 
   return (
     <>
       {selectedAny ? (
-        <input
-          type="checkbox"
-          className={`rounded-lg h-8 w-8 border-2 border-gray-300 cursor-pointer`}
+        checkboxColor === "error" ? (
+          <Checkbox
+            color="error"
+            checkedIcon={<DisabledByDefaultIcon />}
+            checked={selected}
+            style={{
+              transform: "scale(1.4)",
+            }}
+          />
+        ) : (
+          <Checkbox
+            color="success"
+            checked={selected}
+            style={{
+              transform: "scale(1.4)",
+            }}
+          />
+        )
+      ) : checkboxColor === "error" ? (
+        <Checkbox
+          color="error"
+          checkedIcon={<DisabledByDefaultIcon />}
           checked={selected}
           onChange={handleSelect}
-          disabled
+          style={{
+            transform: "scale(1.4)",
+          }}
         />
       ) : (
-        <input
-          type="checkbox"
-          className={`rounded-lg h-8 w-8 border-2 border-gray-300 cursor-pointer`}
+        <Checkbox
+          color="success"
           checked={selected}
           onChange={handleSelect}
+          style={{
+            transform: "scale(1.4)",
+          }}
         />
       )}
 

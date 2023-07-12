@@ -26,15 +26,15 @@ interface QuizTableRowProps {
   key: any;
   row: any;
   index: any;
+  refresh: any;
   setRefresh: any;
-  setEditQuizId: (id: string) => void;
 }
 
 export default function QuizTableRow({
   row,
   index,
+  refresh,
   setRefresh,
-  setEditQuizId,
 }: QuizTableRowProps) {
   const [hover, setHover] = useState(true);
   const [active, setActive] = useState(true);
@@ -49,17 +49,18 @@ export default function QuizTableRow({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {columns.map((column) => {
+      {columns.map((column, index) => {
         const value = row[column.id];
         return (
           <QuizTableCell
+            key={index}
             column={column}
             value={value}
             row_id={row.id}
+            refresh={refresh}
             setRefresh={setRefresh}
             active={active}
             setActive={setActive}
-            setEditQuizId={setEditQuizId}
           />
         );
       })}

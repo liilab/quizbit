@@ -63,7 +63,6 @@ export default function useQuestionsForm(id = "") {
     };
 
     if (id) {
-      console.log(quizData);
       axios
         .put(home_url + `/wp-json/quizbit/v1/quiz/update/${id}`, quizData)
         .then(() => {
