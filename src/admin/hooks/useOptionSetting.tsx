@@ -27,13 +27,16 @@ export default function useOptionSetting({ options, setOptions }: OptionsProps) 
     setInputAreas(updatedInputAreas);
     setOptions(updatedInputAreas);
   };
-
+  
   const handleCheckboxChange = (index: number) => {
-    const updatedInputAreas = [...inputAreas];
-    updatedInputAreas[index].isCorrect = !updatedInputAreas[index].isCorrect;
+    const updatedInputAreas = inputAreas.map((inputArea, i) => ({
+      ...inputArea,
+      isCorrect: i === index,
+    }));
     setInputAreas(updatedInputAreas);
     setOptions(updatedInputAreas);
   };
+  
 
   const handleDeleteInput = (index: number) => {
     const updatedInputAreas = [...inputAreas];
