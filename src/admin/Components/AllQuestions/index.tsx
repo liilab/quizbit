@@ -25,9 +25,9 @@ const columns: readonly Column[] = [
     label: "#",
     minWidth: 70,
   },
-  { id: "title", label: "Title", minWidth: 250 },
-  { id: "description", label: "Description", minWidth: 370 },
-  { id: "short_code", label: "Short Code", minWidth: 170 },
+  { id: "title", label: "Title", minWidth: 350 },
+  { id: "description", label: "Description", minWidth: 570 },
+  { id: "short_code", label: "Short Code", minWidth: 270 },
 ];
 
 interface Data {

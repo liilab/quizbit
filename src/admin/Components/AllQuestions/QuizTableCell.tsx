@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TableCell from "@mui/material/TableCell";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface Column {
   id: "number" | "title" | "description" | "id" | "short_code";
@@ -35,37 +36,47 @@ export default function QuizTableCell({
   const home_url = (window as any).userLocalize.home_url;
 
   function deleteQuiz(id: string) {
-    axios
-      .delete(home_url + `/wp-json/quizbit/v1/quiz/delete/${id}`)
-      .then((response) => {
-        setRefresh(!refresh);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(home_url + `/wp-json/quizbit/v1/quiz/delete/${id}`)
+          .then((response) => {
+            setRefresh(!refresh);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
   }
 
   useEffect(() => {
     axios
       .get(home_url + `/wp-json/quizbit/v1/quiz/getstatus/${row_id}`)
       .then((response) => {
-        setTimeout(() => {
-          if (response.data.isactive == 1) setActive(true);
-          else setActive(false);
-        }, 1000);
+        if (response.data.isactive == 1) setActive(true);
+        else setActive(false);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [active, row_id]);
+  }, [row_id]);
 
   function updateStatus(id: string, status: boolean) {
     axios
       .put(home_url + `/wp-json/quizbit/v1/quiz/updatestatus/${id}`, {
         isactive: status,
       })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         setRefresh(true);
       })
       .catch((error) => {
@@ -140,11 +151,11 @@ export default function QuizTableCell({
                     updateStatus(row_id, !active);
                   }}
                 />
-                <div className="w-10 h-5 bg-gray-300 rounded-full  peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#864DB6]"></div>
+                <div className="tablet-button w-10 h-5 bg-gray-300 rounded-full peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#864DB6] transition-colors ease-in-out duration-300"></div>
                 <span
                   className={`ml-3 text-sm font-bold ${
                     active ? "text-green-500" : "text-gray-500"
-                  }`}
+                  } transition-colors ease-in-out duration-300`}
                 >
                   {active ? "Active" : "Inactive"}
                 </span>

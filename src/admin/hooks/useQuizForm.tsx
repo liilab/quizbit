@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 interface Option {
   value: string;
@@ -38,8 +39,7 @@ export default function useQuestionsForm(id = "") {
 
       fetchData();
     }, [id]);
-  }
-  else{
+  } else {
     useEffect(() => {
       setTitle("");
       setDescription("");
@@ -63,19 +63,39 @@ export default function useQuestionsForm(id = "") {
     };
 
     if (id) {
-      axios
-        .put(home_url + `/wp-json/quizbit/v1/quiz/update/${id}`, quizData)
-        .then(() => {
-          window.location.href =
-            site_url + "/wp-admin/admin.php?page=quizbit#/all-quizzes";
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .put(home_url + `/wp-json/quizbit/v1/quiz/update/${id}`, quizData)
+            .then(() => {
+              window.location.href =
+                site_url + "/wp-admin/admin.php?page=quizbit#/all-quizzes";
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          Swal.fire("Updated!", "Your file has been updated.", "success");
+        }
+      });
     } else {
       axios
         .post(home_url + "/wp-json/quizbit/v1/quiz", quizData)
         .then(() => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Quiz has been saved",
+            showConfirmButton: false,
+            timer: 2500,
+          });
           window.location.href =
             site_url + "/wp-admin/admin.php?page=quizbit#/all-quizzes";
         })
