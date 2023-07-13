@@ -77,7 +77,7 @@ class Menu
         $parent_slug = 'quizbit';
         $capability = 'manage_options';
 
-        add_menu_page(__('Quizbit', 'quizbit'), __('Quizbit', 'quizbit'), $capability, $parent_slug,  [$this, 'quizbit'], 'dashicons-admin-post', '2.1');
+        add_menu_page(__('Quizbit', 'quizbit'), __('Quizbit', 'quizbit'), $capability, $parent_slug,  [$this, 'quizbit'], 'dashicons-yes-alt', '2.1');
         global $submenu;
 
         $submenu[$parent_slug]['all-quizzes'] = array(
