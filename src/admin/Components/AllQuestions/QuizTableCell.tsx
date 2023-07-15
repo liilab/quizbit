@@ -46,6 +46,17 @@ export default function QuizTableCell({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
+
+        axios.interceptors.request.use(
+          function (config) {
+            config.headers["X-WP-Nonce"] = (window as any).userLocalize.nonce;
+            return config;
+          },
+          function (error) {
+            return Promise.reject(error);
+          }
+        );
+
         axios
           .delete(home_url + `/wp-json/quizbit/v1/quiz/delete/${id}`)
           .then((response) => {
@@ -59,19 +70,18 @@ export default function QuizTableCell({
     });
   }
 
-  useEffect(() => {
-    axios
-      .get(home_url + `/wp-json/quizbit/v1/quiz/getstatus/${row_id}`)
-      .then((response) => {
-        if (response.data.isactive == 1) setActive(true);
-        else setActive(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [row_id]);
-
   function updateStatus(id: string, status: boolean) {
+
+    axios.interceptors.request.use(
+      function (config) {
+        config.headers["X-WP-Nonce"] = (window as any).userLocalize.nonce;
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+
     axios
       .put(home_url + `/wp-json/quizbit/v1/quiz/updatestatus/${id}`, {
         isactive: status,

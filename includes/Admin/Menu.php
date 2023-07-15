@@ -1,6 +1,6 @@
 <?php
 
-namespace  Quizbit\Admin;
+namespace Quizbit\Admin;
 
 use Quizbit\Traits\Singleton;
 use Kucrut\Vite;
@@ -30,7 +30,6 @@ class Menu
      * @param string $src
      * @return string
      */
-
     public function add_module_to_script($tag, $handle, $src)
     {
         if ($handle === 'quizbit-admin') {
@@ -46,14 +45,13 @@ class Menu
      */
     public function admin_enqueue_scripts()
     {
-        if(!isset($_GET['page']) || $_GET['page'] !== 'quizbit') {
+        if (!isset($_GET['page']) || $_GET['page'] !== 'quizbit') {
             return;
         }
-        
+
         if (defined('Quizbit_DEVELOPMENT') && Quizbit_DEVELOPMENT === 'yes') {
             Vite\enqueue_asset(Quizbit_PATH . '/dist', 'src/admin/admin.tsx', ['handle' => 'quizbit-admin', 'in-footer' => true]);
         } else {
-
             wp_enqueue_style('quizbit-admin', Quizbit_URL . '/dist/css/admin.css', [], Quizbit_VERSION);
             wp_enqueue_script(
                 'quizbit-admin',
@@ -63,10 +61,12 @@ class Menu
                 true
             );
         }
-        //Localize the script with new data
+
+        // Localize the script with new data
         $data = array(
             'home_url' => home_url(),
             'site_url' => site_url(),
+            'nonce' => wp_create_nonce('wp_rest'),
         );
         wp_localize_script('quizbit-admin', 'userLocalize', $data);
     }

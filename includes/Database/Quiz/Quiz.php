@@ -8,6 +8,8 @@ class Quiz
     public function insert_quiz_data($data)
     {
         global $wpdb;
+
+
         $wpdb->insert(
             $wpdb->prefix . 'quizbit_quizzes',
             array(
@@ -15,7 +17,10 @@ class Quiz
                 'description' => $data['description'],
             )
         );
+
         $quizId = $wpdb->insert_id;
+
+        // Insert the updated questions and options
         foreach ($data['questions'] as $quiz) {
             $wpdb->insert(
                 $wpdb->prefix . 'quizbit_questions',
@@ -41,10 +46,13 @@ class Quiz
             }
         }
 
-        return $quizId;
+        return array(
+            'id' => $quizId,
+            'data' => $this->get_quiz_data($quizId, 1),
+        );
     }
 
-    public function update_quiz_data($data)
+    public function update_quiz_data($quizId, $data)
     {
         global $wpdb;
 
@@ -55,19 +63,19 @@ class Quiz
                 'title' => $data['title'],
                 'description' => $data['description'],
             ),
-            array('id' => $data['id'])
+            array('id' =>  $quizId)
         );
 
         // Delete the existing options associated with the questions
         $wpdb->query($wpdb->prepare(
             'DELETE FROM ' . $wpdb->prefix . 'quizbit_options WHERE question_id IN (SELECT id FROM ' . $wpdb->prefix . 'quizbit_questions WHERE quiz_id = %d)',
-            $data['id']
+            $quizId
         ));
 
         // Delete the existing questions associated with the quiz
         $wpdb->delete(
             $wpdb->prefix . 'quizbit_questions',
-            array('quiz_id' => $data['id'])
+            array('quiz_id' => $quizId)
         );
 
         // Insert the updated questions and options
@@ -75,7 +83,7 @@ class Quiz
             $wpdb->insert(
                 $wpdb->prefix . 'quizbit_questions',
                 array(
-                    'quiz_id' => $data['id'],
+                    'quiz_id' => $quizId,
                     'title' => $quiz['title'],
                 )
             );
@@ -96,12 +104,11 @@ class Quiz
             }
         }
 
-        return $data['id'];
+        return array(
+            'id' => $quizId,
+            'data' => $this->get_quiz_data($quizId, 1),
+        );
     }
-
-
-
-
 
     public function get_all_quizzes()
     {
@@ -112,14 +119,10 @@ class Quiz
         return $quizzes;
     }
 
-    public function get_quiz_data($data)
+    public function get_quiz_data($quizId, $source = '0')
     {
         global $wpdb;
 
-        $quizId = $data['id'];
-        $source = $data['source'];
-
-        // Check if the quiz is active
         $isActive = $wpdb->get_var(
             $wpdb->prepare(
                 "SELECT isActive FROM {$wpdb->prefix}quizbit_quizzes WHERE id = %d",
@@ -128,15 +131,12 @@ class Quiz
         );
 
         $isActive = ($isActive == 1) ? true : false;
-        
-        if($source == '1'){
+
+        if ($source == '1') {
             $isActive = true;
         }
 
-
-        // Fetch quiz data only if it is active
         if ($isActive) {
-            // Get the quiz data from the `quizbit_quizzes` table without the 'id' column
             $quiz = $wpdb->get_row(
                 $wpdb->prepare(
                     "SELECT title, description FROM {$wpdb->prefix}quizbit_quizzes WHERE id = %d",
@@ -144,7 +144,6 @@ class Quiz
                 )
             );
 
-            // Get the quiz questions from the `quizbit_questions` table without the 'id' and 'quiz_id' columns
             $questions = $wpdb->get_results(
                 $wpdb->prepare(
                     "SELECT title, id FROM {$wpdb->prefix}quizbit_questions WHERE quiz_id = %d",
@@ -152,7 +151,6 @@ class Quiz
                 )
             );
 
-            // Get the quiz options from the `quizbit_options` table without the 'id' and 'question_id' columns
             foreach ($questions as $question) {
                 $question->options = $wpdb->get_results(
                     $wpdb->prepare(
@@ -160,27 +158,21 @@ class Quiz
                         $question->id
                     )
                 );
-                unset($question->id); // Remove the 'id' property from the question object
+                unset($question->id);
             }
 
-            // Add the questions to the quiz object
             $quiz->questions = $questions;
 
             return $quiz;
         } else {
-            // Quiz is not active, return null or an appropriate response
             return null;
         }
     }
-
-
-
 
     public function delete_quiz($quizId)
     {
         global $wpdb;
 
-        // Find question IDs associated with the quiz
         $questionIds = $wpdb->get_col(
             $wpdb->prepare(
                 "SELECT id FROM {$wpdb->prefix}quizbit_questions WHERE quiz_id = %d",
@@ -189,13 +181,11 @@ class Quiz
         );
 
         if (!empty($questionIds)) {
-            // Find option IDs associated with the questions
             $optionIds = $wpdb->get_col(
                 "SELECT id FROM {$wpdb->prefix}quizbit_options WHERE question_id IN (" . implode(',', $questionIds) . ")"
             );
 
             if (!empty($optionIds)) {
-                // Delete the options associated with the questions
                 $wpdb->query(
                     $wpdb->prepare(
                         "DELETE FROM {$wpdb->prefix}quizbit_options WHERE id IN (" . implode(',', $optionIds) . ")"
@@ -203,7 +193,6 @@ class Quiz
                 );
             }
 
-            // Delete the questions associated with the quiz
             $wpdb->delete(
                 $wpdb->prefix . 'quizbit_questions',
                 array(
@@ -212,7 +201,6 @@ class Quiz
             );
         }
 
-        // Delete the quiz from the `quizbit_quizzes` table
         $wpdb->delete(
             $wpdb->prefix . 'quizbit_quizzes',
             array(

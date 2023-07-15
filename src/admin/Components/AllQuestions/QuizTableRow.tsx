@@ -37,7 +37,7 @@ export default function QuizTableRow({
   setRefresh,
 }: QuizTableRowProps) {
   const [hover, setHover] = useState(true);
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(row.isactive === "1" ? true : false);
 
   return (
     <TableRow

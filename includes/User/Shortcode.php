@@ -60,6 +60,7 @@ class Shortcode
         //Localize the script with new data
         $data = array(
             'home_url' => home_url(),
+            'nonce' => wp_create_nonce('wp_rest'),
         );
         wp_localize_script('quizbit-user', 'userLocalize', $data);
     }

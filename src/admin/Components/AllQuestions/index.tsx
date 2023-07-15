@@ -35,6 +35,7 @@ interface Data {
   id: string;
   title: string;
   description: string;
+  isactive: string;
   short_code: string;
 }
 
@@ -42,10 +43,11 @@ function createData(
   number: number,
   id: string,
   title: string,
-  description: string
+  description: string,
+  isactive: string
 ): Data {
   const short_code = `[quizbit id="${id}"]`;
-  return { number, id, title, description, short_code };
+  return { number, id, title, description, isactive, short_code };
 }
 
 export default function AllQuestionsFunction() {
@@ -54,6 +56,7 @@ export default function AllQuestionsFunction() {
   const [refresh, setRefresh] = useState(false);
   const [rows, setRows] = useState<Data[]>([]);
   const home_url = (window as any).userLocalize.home_url;
+  const site_url = (window as any).userLocalize.site_url;
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -67,7 +70,18 @@ export default function AllQuestionsFunction() {
   };
 
   useEffect(() => {
+    axios.interceptors.request.use(
+      function (config) {
+        config.headers["X-WP-Nonce"] = (window as any).userLocalize.nonce;
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+
     axios
+
       .get(home_url + "/wp-json/quizbit/v1/quiz/all-quizzes")
       .then((response) => {
         const responseData = response.data;
@@ -76,7 +90,8 @@ export default function AllQuestionsFunction() {
           const rows = responseData.data.map((quiz: any, index: number) => {
             const title = quiz.title || "No Title";
             const description = quiz.description || "No Description";
-            return createData(index + 1, quiz.id, title, description);
+            const isactive = quiz.isactive || "0";
+            return createData(index + 1, quiz.id, title, description, isactive);
           });
           setRows(rows);
         } else {
@@ -87,6 +102,18 @@ export default function AllQuestionsFunction() {
         console.error(error);
       });
   }, [refresh]);
+
+  if (rows.length === 0) {
+    return (
+      <>
+      <div className="flex flex-col items-center justify-center space-y-4">
+       <p className="text-2xl font-bold">No Quiz Found</p>
+        <p>Click on <b>Add New Quiz</b> button to create a new quiz.</p>
+        <img src={site_url + "/wp-content/plugins/quizbit/src/assets/images/empty-quiz.png"} alt="No Quiz Found" className="w-1/4 mx-auto" />
+      </div>
+      </>
+    );
+  }
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -107,8 +134,7 @@ export default function AllQuestionsFunction() {
                 key="actions"
                 align="right"
                 style={{ minWidth: 100, fontWeight: "bold" }}
-              >
-              </TableCell>
+              ></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

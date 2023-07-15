@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Plugin Name:       Quizbit
- * Description:       A quiz making plugin for WordPress
+ * Plugin Name:       QuizBit
+ * Description:       A plugin for creating quizzes in WordPress
  * Requires at least: 6.2
  * Requires PHP:      7.0
  * Version:           1.0
  * Author:            LII Lab
+ * Author URI:        https://liilab.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       quizbit

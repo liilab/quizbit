@@ -23,6 +23,17 @@ export default function useQuestionsForm(id = "") {
 
   if (id) {
     useEffect(() => {
+      axios.interceptors.request.use(
+
+        function (config) {
+          config.headers["X-WP-Nonce"] = (window as any).userLocalize.nonce;
+          return config;
+        },
+        function (error) {
+          return Promise.reject(error);
+        }
+      );
+
       const fetchData = async () => {
         try {
           const response = await axios.get(
@@ -73,6 +84,17 @@ export default function useQuestionsForm(id = "") {
         confirmButtonText: "Yes, update it!",
       }).then((result) => {
         if (result.isConfirmed) {
+          
+          axios.interceptors.request.use(
+            function (config) {
+              config.headers["X-WP-Nonce"] = (window as any).userLocalize.nonce;
+              return config;
+            },
+            function (error) {
+              return Promise.reject(error);
+            }
+          );
+
           axios
             .put(home_url + `/wp-json/quizbit/v1/quiz/update/${id}`, quizData)
             .then(() => {
@@ -99,6 +121,17 @@ export default function useQuestionsForm(id = "") {
         }
       });
     } else {
+
+      axios.interceptors.request.use(
+        function (config) {
+          config.headers["X-WP-Nonce"] = (window as any).userLocalize.nonce;
+          return config;
+        },
+        function (error) {
+          return Promise.reject(error);
+        }
+      );
+      
       axios
         .post(home_url + "/wp-json/quizbit/v1/quiz", quizData)
         .then(() => {

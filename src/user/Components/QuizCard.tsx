@@ -43,6 +43,18 @@ export default function QuizCard(id: any) {
 
 
   useEffect(() => {
+
+    axios.interceptors.request.use(
+      function (config) {
+        config.headers["X-WP-Nonce"] = (window as any).userLocalize.nonce;
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+
+    
     axios
       .get(home_url + `/wp-json/quizbit/v1/quiz/0/id/${quizId}`)
       .then((response) => {
