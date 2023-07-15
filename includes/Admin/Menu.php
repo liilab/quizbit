@@ -46,6 +46,10 @@ class Menu
      */
     public function admin_enqueue_scripts()
     {
+        if(!isset($_GET['page']) || $_GET['page'] !== 'quizbit') {
+            return;
+        }
+        
         if (defined('Quizbit_DEVELOPMENT') && Quizbit_DEVELOPMENT === 'yes') {
             Vite\enqueue_asset(Quizbit_PATH . '/dist', 'src/admin/admin.tsx', ['handle' => 'quizbit-admin', 'in-footer' => true]);
         } else {
