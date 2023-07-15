@@ -81,8 +81,21 @@ export default function useQuestionsForm(id = "") {
             })
             .catch((error) => {
               console.error(error);
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+              });
+            })
+            .finally(() => {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Quiz has been updated",
+                showConfirmButton: false,
+                timer: 2500,
+              });
             });
-          Swal.fire("Updated!", "Your file has been updated.", "success");
         }
       });
     } else {
@@ -101,6 +114,11 @@ export default function useQuestionsForm(id = "") {
         })
         .catch((error) => {
           console.error(error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
         });
     }
   };
