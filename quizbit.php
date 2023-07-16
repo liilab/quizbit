@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('Quizbit_DEVELOPMENT', 'yes');
+define('Quizbit_PRODUCTION', 'yes');
 
 /**
  * The main plugin class
