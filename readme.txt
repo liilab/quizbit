@@ -1,10 +1,8 @@
-Sure! Here's an example of a WordPress README file for your QuizBit plugin:
-
 === QuizBit ===
 Contributors: tsabbir007
 Tags: quiz, exam, questions, shortcode
 Requires at least: WordPress 5.0
-Tested up to: WordPress 5.8
+Tested up to: WordPress 6.2
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +14,7 @@ QuizBit is a powerful WordPress plugin that allows you to create quizzes with mu
 
 👉 See Our Official GitHub page: [Official QuizBit GitHub](https://github.com/liilab/quizbit)
 	
-[vimeo https://vimeo.com/845596414]
+[vimeo https://vimeo.com/845629913]
 
 == Installation ==
 
