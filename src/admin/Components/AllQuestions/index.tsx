@@ -10,6 +10,8 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 import QuizTableRow from "./QuizTableRow";
+import EmptyQuiz from "../../../assets/images/empty-quiz.png";
+
 
 interface Column {
   id: "number" | "title" | "description" | "id" | "short_code";
@@ -81,10 +83,10 @@ export default function AllQuestionsFunction() {
     );
 
     axios
-
       .get(home_url + "/wp-json/quizbit/v1/quiz/all-quizzes")
       .then((response) => {
         const responseData = response.data;
+
 
         if (Array.isArray(responseData.data)) {
           const rows = responseData.data.map((quiz: any, index: number) => {
@@ -103,66 +105,73 @@ export default function AllQuestionsFunction() {
       });
   }, [refresh]);
 
-  if (rows.length === 0) {
-    return (
+  if (rows[0]) {
+     return (
+      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth, fontWeight: "bold" }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+                <TableCell
+                  key="actions"
+                  align="right"
+                  style={{ minWidth: 100, fontWeight: "bold" }}
+                ></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  return (
+                    <QuizTableRow
+                      key={index}
+                      row={row}
+                      index={index}
+                      refresh={refresh}
+                      setRefresh={setRefresh}
+                    />
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[1, 5, 10]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    );
+    
+  } else {
+   return (
       <>
-      <div className="flex flex-col items-center justify-center space-y-4">
-       <p className="text-2xl font-bold">No Quiz Found</p>
-        <p>Click on <b>Add New Quiz</b> button to create a new quiz.</p>
-        <img src={site_url + "/wp-content/plugins/quizbit/src/assets/images/empty-quiz.png"} alt="No Quiz Found" className="w-1/4 mx-auto" />
-      </div>
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <p className="text-2xl font-bold">No Quiz Found</p>
+          <p>
+            Click on <b>Add New Quiz</b> button to create a new quiz.
+          </p>
+          <img
+            src={EmptyQuiz}
+            alt="No Quiz Found"
+            className="w-1/4 mx-auto"
+          />
+        </div>
       </>
     );
   }
-
-  return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth, fontWeight: "bold" }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-              <TableCell
-                key="actions"
-                align="right"
-                style={{ minWidth: 100, fontWeight: "bold" }}
-              ></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <QuizTableRow
-                    key={index}
-                    row={row}
-                    index={index}
-                    refresh={refresh}
-                    setRefresh={setRefresh}
-                  />
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[1, 5, 10]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-  );
 }
