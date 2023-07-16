@@ -1,16 +1,23 @@
 <?php
 
 /**
+ * QuizBit - A plugin for creating quizzes in WordPress
+ * 
+ * @since            1.0.0
+ * @package          QuizBit
+ *
  * Plugin Name:       QuizBit
  * Description:       A plugin for creating quizzes in WordPress
  * Requires at least: 6.2
  * Requires PHP:      7.0
- * Version:           1.0
+ * Version:           1.0.0
  * Author:            LII Lab
  * Author URI:        https://liilab.com
- * License:           GPL-2.0-or-later
+ * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       quizbit
+ * Domain Path:       /languages
+ * Tags:              quiz, quiz maker, quiz builder, quiz creator, quiz plugin, quiz plugin for wordpress, quiz plugin wordpress, quiz plugin wp, quiz plugin for wp, quiz plugin for wordpress free
  */
 
 

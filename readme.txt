@@ -2,12 +2,14 @@
 Contributors: tsabbir007
 Tags: quiz, exam, questions, shortcode
 Requires at least: WordPress 5.0
-Tested up to: WordPress 6.2
+Tested up to: WordPress 6.2.2
 Stable tag: 1.0.0
+Requires PHP: 5.4 or later
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
+
 QuizBit is a powerful WordPress plugin that allows you to create quizzes with multiple-choice questions. It provides an easy-to-use interface for creating quizzes, questions, and options. Users can display quizzes on their WordPress website by using shortcodes.
 
 = QUIZBIT - A POWERFUL QUIZ PLUGIN FOR WORDPRESS =
@@ -17,14 +19,13 @@ QuizBit is a powerful WordPress plugin that allows you to create quizzes with mu
 [vimeo https://vimeo.com/845629913]
 
 == Installation ==
-
-1. Upload the `quizbit` folder to the `/wp-content/plugins/` directory.
+1. Install the plugin through the WordPress plugins screen directly named 'QuizBit' or upload the plugin files.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. You will find the QuizBit settings under 'Settings' in the WordPress dashboard.
+3. You will find the QuizBit settings under 'Dashboard' in the WordPress dashboard.
 
 == Usage ==
 
-1. Create a new quiz by navigating to 'QuizBit' > 'Add New Quiz' in the WordPress dashboard.
+1. Create a new quiz by navigating to 'QuizBit' > 'Add New' in the WordPress dashboard.
 2. Add questions to the quiz by clicking on 'Add Question'. Enter the question text and options.
 3. Save the quiz.
 4. To display a quiz on a page or post, use the following shortcode: `[quizbit id="quiz_id"]`. Replace "quiz_id" with the ID of the quiz you want to display.
@@ -41,7 +42,7 @@ QuizBit is a powerful WordPress plugin that allows you to create quizzes with mu
 == Frequently Asked Questions ==
 
 = How can I create a quiz? =
-To create a quiz, go to 'QuizBit' > 'Add New Quiz' in the WordPress dashboard. Add questions and options to the quiz, and then save it.
+To create a quiz, go to 'QuizBit' > 'Add New' in the WordPress dashboard. Add questions and options to the quiz, and then save it.
 
 = Can I have multiple quizzes on the same page? =
 Yes, you can have multiple quizzes on the same page by using different shortcodes with different quiz IDs.
@@ -52,36 +53,14 @@ QuizBit uses the default styling of your WordPress theme. However, you can add c
 == Screenshots ==
 
 1. Quiz creation screen
-2. Quiz preview on a WordPress page
+2. Quiz update screen
+3. All quizzes screen
+4. Empty quiz screen
+5. Quiz preview on a WordPress page
+6. Quiz result screen
 
 == Changelog ==
 
-= 1.0.0 =
-* Initial release of the QuizBit plugin.
-
 == Upgrade Notice ==
+It is recommended to keep your QuizBit plugin up to date in order to ensure that it is functioning properly and to take advantage of any new features or improvements.
 
-= 1.0.0 =
-Initial release of the QuizBit plugin.
-
-== Frequently Asked Questions ==
-
-For frequently asked questions, please visit our support page at [QuizBit Support](https://wordpress.org/support/plugin/quizbit) and create a topic.
-
-== Support ==
-
-For support and assistance, please create a topic on [QuizBit Support](https://wordpress.org/support/plugin/quizbit).
-
-== Contribute ==
-
-1. Fork the repository on [GitHub](https://github.com/liilab/quizbit).
-2. Make any changes or improvements.
-3. Submit a pull request.
-
-== License ==
-
-QuizBit is distributed under the GPLv2 or later license. More details can be found in the [License file](https://www.gnu.org/licenses/gpl-2.0.html).
-
-== Credits ==
-
-This plugin is developed by tsabbir007.

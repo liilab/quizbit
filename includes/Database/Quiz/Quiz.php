@@ -13,8 +13,8 @@ class Quiz
         $wpdb->insert(
             $wpdb->prefix . 'quizbit_quizzes',
             array(
-                'title' => $data['title'],
-                'description' => $data['description'],
+                'title' => sanitize_text_field($data['title']),
+                'description' => sanitize_text_field($data['description']),
             )
         );
 
@@ -26,7 +26,7 @@ class Quiz
                 $wpdb->prefix . 'quizbit_questions',
                 array(
                     'quiz_id' => $quizId,
-                    'title' => $quiz['title'],
+                    'title' => sanitize_text_field($quiz['title']),
                 )
             );
 
@@ -39,7 +39,7 @@ class Quiz
                     $wpdb->prefix . 'quizbit_options',
                     array(
                         'question_id' => $questionId,
-                        'value' => $option['value'],
+                        'value' => sanitize_text_field($option['value']),
                         'isCorrect' => $option['isCorrect'] ? 1 : 0,
                     )
                 );
@@ -56,12 +56,14 @@ class Quiz
     {
         global $wpdb;
 
+        $quizId = sanitize_text_field($quizId);
+
         // Update the quiz data in the `quizbit_quizzes` table
         $wpdb->update(
             $wpdb->prefix . 'quizbit_quizzes',
             array(
-                'title' => $data['title'],
-                'description' => $data['description'],
+                'title' => sanitize_text_field($data['title']),
+                'description' => sanitize_text_field($data['description']),
             ),
             array('id' =>  $quizId)
         );
@@ -84,7 +86,7 @@ class Quiz
                 $wpdb->prefix . 'quizbit_questions',
                 array(
                     'quiz_id' => $quizId,
-                    'title' => $quiz['title'],
+                    'title' => sanitize_text_field($quiz['title']),
                 )
             );
 
@@ -97,7 +99,7 @@ class Quiz
                     $wpdb->prefix . 'quizbit_options',
                     array(
                         'question_id' => $questionId,
-                        'value' => $option['value'],
+                        'value' => sanitize_text_field($option['value']),
                         'isCorrect' => $option['isCorrect'] ? 1 : 0,
                     )
                 );
@@ -122,6 +124,9 @@ class Quiz
     public function get_quiz_data($quizId, $source = '0')
     {
         global $wpdb;
+
+        $quizId = sanitize_text_field($quizId);
+        $source = sanitize_text_field($source);
 
         $isActive = $wpdb->get_var(
             $wpdb->prepare(
@@ -172,6 +177,8 @@ class Quiz
     public function delete_quiz($quizId)
     {
         global $wpdb;
+
+        $quizId = sanitize_text_field($quizId);
 
         $questionIds = $wpdb->get_col(
             $wpdb->prepare(
