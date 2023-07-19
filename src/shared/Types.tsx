@@ -8,3 +8,7 @@ export interface UserInfo {
 export interface UserinfoShortcodeAttributes {
   id: string;
 }
+
+export interface QuizType{
+ id : "single_choice" | "multiple_choice";
+}
