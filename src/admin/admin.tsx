@@ -7,6 +7,9 @@ import AddNew from "./pages/add-new";
 import MenuRouter from "./routes/Router";
 import "./admin.scss";
 
+import { Provider } from "react-redux";
+import store  from "./redux/store";
+
 const MenuLists = [
   {
     path: "all-quizzes",
@@ -23,6 +26,8 @@ ReactDOM.createRoot(
   document.getElementById("quizbit") as HTMLElement
 ).render(
   <React.StrictMode>
+    <Provider store={store}>
     <MenuRouter routers={MenuLists} />
+    </Provider>
   </React.StrictMode>
 );

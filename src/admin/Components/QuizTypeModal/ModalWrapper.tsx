@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { QuizType } from "../../../shared/Types";
-
+import { useSelector, useDispatch } from "react-redux";
 
 const style = {
   position: "absolute" as "absolute",
@@ -18,20 +18,23 @@ const style = {
 };
 
 interface LayoutProps {
-  quizType : QuizType | null;
-  setQuizType: (quizType: QuizType) => void;
   children: React.ReactNode;
 }
 
-export default function BasicModal({
-  quizType,
-  setQuizType,
-  children,
-}: LayoutProps) {
+const setQuizType = (quizType) => ({
+  type: "SET_QUIZ_TYPE",
+  payload: quizType,
+});
+
+export default function BasicModal({ children }: LayoutProps) {
   const [open, setOpen] = useState(true);
-  const handleSetQuiz = (type: QuizType) => {
+
+  const quizType = useSelector((state: any) => state.quizType);
+  const dispatch = useDispatch();
+
+  const handleSetQuiz = ( type: string) => {
     setOpen(false);
-    setQuizType(type);
+    dispatch(setQuizType(type));
   };
 
   return (
@@ -42,8 +45,16 @@ export default function BasicModal({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Button onClick={() => handleSetQuiz("single_choice")}> Single Choice</Button>
-          <Button onClick={() => handleSetQuiz("multiple_choice")}> Multiple Choice</Button>
+          <p>Quiz Type: {quizType}</p>
+
+          <Button onClick={() => handleSetQuiz("single_choice")}>
+            {" "}
+            Single Choice
+          </Button>
+          <Button onClick={() => handleSetQuiz("multiple_choice")}>
+            {" "}
+            Multiple Choice
+          </Button>
         </Box>
       </Modal>
       {!open && <div>{children}</div>}

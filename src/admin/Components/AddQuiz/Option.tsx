@@ -4,6 +4,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Button from "../../../shared/Button";
 import useOptionSetting from "../../hooks/useOptionSetting";
 import Checkbox from "@mui/material/Checkbox";
+import { useSelector } from "react-redux";
 
 interface Option {
   value: string;
@@ -28,6 +29,8 @@ export default function Options({ options, setOptions }: OptionsProps) {
     handleDeleteInput,
   } = useOptionSetting({ options, setOptions });
 
+  const quizType = useSelector((state: any) => state.quizType);
+
   return (
     <div>
       {inputAreas.map((input, index) => (
@@ -43,7 +46,7 @@ export default function Options({ options, setOptions }: OptionsProps) {
             <Checkbox
               color="success"
               checked={isCorrect(input.isCorrect)}
-              onClick={() => handleCheckboxChange(index)}
+              onClick={() => handleCheckboxChange(index , quizType)}
             />
             <CancelIcon
               className="cursor-pointer"

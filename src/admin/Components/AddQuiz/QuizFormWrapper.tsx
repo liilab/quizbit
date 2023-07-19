@@ -1,14 +1,13 @@
 import React from "react";
 import QuizForm from "./QuizForm";
 import useQuizForm from "../../hooks/useQuizForm";
-import { QuizType } from "../../../shared/Types";
+
 
 interface QuizFormWrapperProps {
   id?: string;
-  quizType?: QuizType | null;
 }
 
-export default function QuizFormWrapper({ id = "", quizType }: QuizFormWrapperProps) {  
+export default function QuizFormWrapper({ id = ""}: QuizFormWrapperProps) {  
   const {
     showDescription,
     setShowDescription,
@@ -21,8 +20,6 @@ export default function QuizFormWrapper({ id = "", quizType }: QuizFormWrapperPr
     setNewQuestions,
     formSubmit,
   } = useQuizForm(id);
-
-  console.log("QuizFormWrapper", id, quizType);
 
   return (
     <>

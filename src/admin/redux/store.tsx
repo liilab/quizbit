@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 // Define initial state
 const initialState = {
@@ -19,6 +19,6 @@ const reducer = (state = initialState, action) => {
 };
 
 // Create the Redux store
-const store = createStore(reducer);
+const store = configureStore({ reducer });
 
 export default store;

@@ -5,13 +5,11 @@ import QuizFormWrapper from "../components/AddQuiz/QuizFormWrapper";
 import { useLocation } from "react-router-dom";
 import ModalWrapper from "../components/QuizTypeModal/ModalWrapper";
 import { QuizType } from "../../shared/Types"
-import { useSelector, useDispatch } from 'react-redux';
 
 export default function AddNewQuiz() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
-  const [quizType, setQuizType] = useState<QuizType | null>(null);
 
   const menus = [
     {
@@ -22,10 +20,10 @@ export default function AddNewQuiz() {
 
 
   return (
-    <ModalWrapper quizType={quizType} setQuizType={setQuizType}>
+    <ModalWrapper>
       <WpWrapper>
         <Navbar menus={menus} border_color="blue" />
-        <QuizFormWrapper id={id === null ? "" : id} quizType={quizType} />
+        <QuizFormWrapper id={id === null ? "" : id}/>
       </WpWrapper>
     </ModalWrapper>
   );
