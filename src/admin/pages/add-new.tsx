@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import WpWrapper from "../Components/Layout/WpWrapper";
-import Navbar from "../Components/Navbar";
-import QuizFormWrapper from "../Components/AddQuiz/QuizFormWrapper"
+import WpWrapper from "../components/Layout/WpWrapper";
+import Navbar from "../components/Navbar";
+import QuizFormWrapper from "../components/AddQuiz/QuizFormWrapper"
 import { useLocation } from "react-router-dom";
 import ModalWrapper from "../components/QuizTypeModal/ModalWrapper";
 import { QuizType } from "../../shared/Types"

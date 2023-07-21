@@ -1,7 +1,7 @@
 import React from "react";
-import WpWrapper from "../Components/Layout/WpWrapper";
-import Navbar from "../Components/Navbar";
-import AllQuestionsContainer from "../Components/AllQuestions";
+import WpWrapper from "../components/Layout/WpWrapper";
+import Navbar from "../components/Navbar";
+import AllQuestionsContainer from "../components/AllQuestions";
 
 export default function AllQuestions() {
   const menus = [
