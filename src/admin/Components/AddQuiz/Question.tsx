@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Input from "../../../Shared/Input";
+import Input from "../../../shared/Input";
 import Option from "./Option";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "../../../shared/Button";
