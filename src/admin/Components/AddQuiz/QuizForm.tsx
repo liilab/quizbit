@@ -1,5 +1,5 @@
 import React from "react";
-import Input from "../../../Shared/Input";
+import Input from "../../../shared/Input";
 import Question from "./Question";
 import Button from "../../../shared/Button";
 
