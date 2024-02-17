@@ -1,4 +1,4 @@
-=== QuizBit ===
+=== QuizBit - Create quizzes in WordPress ===
 Contributors: tsabbir007
 Tags: quiz, quiz maker, quiz builder, quiz creator, quiz plugin, quiz plugin for wordpress, quiz plugin wordpress, quiz plugin wp, quiz plugin for wp, quiz plugin for wordpress free
 Requires at least: WordPress 6.1
@@ -63,4 +63,3 @@ QuizBit uses the default styling of your WordPress theme. However, you can add c
 
 == Upgrade Notice ==
 It is recommended to keep your QuizBit plugin up to date in order to ensure that it is functioning properly and to take advantage of any new features or improvements.
-
