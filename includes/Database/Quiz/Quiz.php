@@ -189,13 +189,17 @@ class Quiz
 
         if (!empty($questionIds)) {
             $optionIds = $wpdb->get_col(
-                "SELECT id FROM {$wpdb->prefix}quizbit_options WHERE question_id IN (" . implode(',', $questionIds) . ")"
+                $wpdb->prepare(
+                    "SELECT id FROM {$wpdb->prefix}quizbit_options WHERE question_id IN (" . implode(',', array_fill(0, count($questionIds), '%d')) . ')',
+                    $questionIds
+                )
             );
 
             if (!empty($optionIds)) {
                 $wpdb->query(
                     $wpdb->prepare(
-                        "DELETE FROM {$wpdb->prefix}quizbit_options WHERE id IN (" . implode(',', $optionIds) . ")"
+                        "DELETE FROM {$wpdb->prefix}quizbit_options WHERE id IN (" . implode(',', array_fill(0, count($optionIds), '%d')) . ')',
+                        $optionIds
                     )
                 );
             }
