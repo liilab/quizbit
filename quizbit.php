@@ -8,8 +8,6 @@
  *
  * Plugin Name:       QuizBit
  * Description:       A plugin for creating quizzes in WordPress
- * Requires at least: 6.2
- * Requires PHP:      7.0
  * Version:           1.0.0
  * Author:            LII Lab
  * Author URI:        https://liilab.com
@@ -20,9 +18,8 @@
  * Tags:              quiz, quiz maker, quiz builder, quiz creator, quiz plugin, quiz plugin for wordpress, quiz plugin wordpress, quiz plugin wp, quiz plugin for wp, quiz plugin for wordpress free
  */
 
-
-if (!defined('ABSPATH')) {
-    exit;
+ if (!defined('ABSPATH')) {
+	exit;
 }
 
 define('Quizbit_DEVELOPMENT', 'yes');
@@ -33,93 +30,115 @@ define('Quizbit_DEVELOPMENT', 'yes');
 final class Quizbit
 {
 
-    /**
-     * Plugin version
-     *
-     * @var string
-     */
-    const version = '1.0';
 
-    /**
-     * Class construcotr
-     */
-    private function __construct()
-    {
-        require_once __DIR__ . '/vendor/autoload.php';
+	/**
+	 * Plugin version
+	 *
+	 * @var string
+	 */
+	const version = '1.0';
 
-        $this->define_constants();
+	/**
+	 * Class constructor
+	 */
+	private function __construct()
+	{
+		require_once __DIR__ . '/vendor/autoload.php';
 
-        register_activation_hook(__FILE__, [$this, 'activate']);
+		$this->define_constants();
 
-        add_action('plugins_loaded', [$this, 'init_plugin']);
-        add_filter('script_loader_tag', array($this, 'addModuleToScript'), 10, 3);
-    }
+		register_activation_hook(__FILE__, array($this, 'activate'));
+		add_action('admin_init', [$this, 'plugin_redirect']);
 
-    public function addModuleToScript($tag, $handle, $src)
-    {
-        if ($handle === 'quizbit-admin-js') {
-            $tag = '<script type="module" id="quizbit-admin-js" src="' . esc_url($src) . '"></script>';
-        }
-        return $tag;
-    }
+		add_action('plugins_loaded', array($this, 'init_plugin'));
+		add_filter('script_loader_tag', array($this, 'addModuleToScript'), 10, 3);
+	}
+
+	public function addModuleToScript($tag, $handle, $src)
+	{
+		if ($handle === 'quizbit-admin-js') {
+			$tag = '<script type="module" id="quizbit-admin-js" src="' . esc_url($src) . '"></script>';
+		}
+		return $tag;
+	}
+
+	/**
+	 * Plugin redirect
+	 *
+	 * @return void
+	 * @since  1.0.0
+	 *
+	 */
+
+	public function plugin_redirect()
+	{
+		if (get_option('quizbit_do_activation_redirect', false)) {
+			delete_option('quizbit_do_activation_redirect');
+			if (!isset($_GET['activate-multi'])) {
+				wp_redirect("admin.php?page=quizbit#/add-new");
+			}
+		}
+	}
 
 
-    /**
-     * Initializes a singleton instance
-     *
-     * @return \Quizbit
-     */
-    public static function init()
-    {
-        static $instance = false;
+	/**
+	 * Initializes a singleton instance
+	 *
+	 * @return \Quizbit
+	 */
+	public static function init()
+	{
+		static $instance = false;
 
-        if (!$instance) {
-            $instance = new self();
-        }
+		if (!$instance) {
+			$instance = new self();
+		}
 
-        return $instance;
-    }
+		return $instance;
+	}
 
-    /**
-     * Define the required plugin constants
-     *
-     * @return void
-     */
-    public function define_constants()
-    {
-        define('Quizbit_VERSION', self::version);
-        define('Quizbit_FILE', __FILE__);
-        define('Quizbit_PATH', __DIR__);
-        define('Quizbit_URL', plugins_url('', Quizbit_FILE));
-        define('Quizbit_ASSETS', Quizbit_URL . '/assets');
-    }
+	/**
+	 * Define the required plugin constants
+	 *
+	 * @return void
+	 */
+	public function define_constants()
+	{
+		define('Quizbit_VERSION', self::version);
+		define('Quizbit_FILE', __FILE__);
+		define('Quizbit_PATH', __DIR__);
+		define('Quizbit_URL', plugins_url('', Quizbit_FILE));
+		define('Quizbit_ASSETS', Quizbit_URL . '/assets');
+	}
 
-    /**
-     * Initialize the plugin
-     *
-     * @return void
-     */
-    public function init_plugin()
-    {
+	/**
+	 * Initialize the plugin
+	 *
+	 * @return void
+	 */
+	public function init_plugin()
+	{
 
-        if (is_admin()) {
-            new Quizbit\Admin();
-        }
+		if (is_admin()) {
+			new Quizbit\Admin();
+		}
 
-        new Quizbit\User();
-        new Quizbit\API();
-    }
+		new Quizbit\User();
+		new Quizbit\API();
+	}
 
-    /**
-     * Do stuff upon plugin activation
-     *
-     * @return void
-     */
-    public function activate()
-    {
-        $installer = new Quizbit\Installer();
-        $installer->run();
-    }
+	/**
+	 * Do stuff upon plugin activation
+	 *
+	 * @return void
+	 */
+	public function activate()
+	{
+		$installer = new Quizbit\Installer();
+		$installer->run();
+
+		add_option('quizbit_do_activation_redirect', true);
+	}
 }
 
 /**
@@ -129,7 +148,7 @@ final class Quizbit
  */
 function Quizbit()
 {
-    return Quizbit::init();
+	return Quizbit::init();
 }
 
 // kick-off the plugin
