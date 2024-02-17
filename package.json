@@ -26,7 +26,7 @@
     "react-icons": "^4.9.0",
     "react-router-dom": "^6.12.1",
     "rollup-plugin-terser": "^7.0.2",
-    "sweetalert2": "^11.4.8",
+    "sweetalert2": "11.4.8",
     "ts-loader": "^9.4.3",
     "vite-plugin-live-reload": "^3.0.2"
   },
