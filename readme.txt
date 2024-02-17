@@ -1,8 +1,8 @@
 === QuizBit ===
 Contributors: tsabbir007
-Tags: quiz, exam, questions, shortcode
-Requires at least: WordPress 5.0
-Tested up to: WordPress 6.2.2
+Tags: quiz, quiz maker, quiz builder, quiz creator, quiz plugin, quiz plugin for wordpress, quiz plugin wordpress, quiz plugin wp, quiz plugin for wp, quiz plugin for wordpress free
+Requires at least: WordPress 6.1
+Tested up to: WordPress 6.4.3
 Stable tag: 1.0.0
 Requires PHP: 5.4 or later
 License: GPLv2 or later
