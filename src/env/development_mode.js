@@ -1,4 +1,4 @@
-import glob from 'glob';
+import {glob} from 'glob';
 import { readFileSync, writeFile } from 'fs';
 
 // For entry file selection
