@@ -33,25 +33,6 @@ class Helper
     }
 
     /**
-     * Return Error response
-     * 
-     * @param string $message
-     * 
-     * @return void
-     */
-
-    public static function return_error_response($message = "Something Error!")
-    {
-        $response = array(
-            "status" => "error",
-            "message" => $message,
-        );
-
-        echo json_encode($response);
-        wp_die();
-    }
-
-    /**
      * String Cleaner
      * 
      * @param string $string
